@@ -1,13 +1,12 @@
-# jawn-streamz
+package jawnstreamz.examples
 
-Asynchronously parse [scalaz-streams](http4s://github.com/scalaz/scalaz-stream)
-to JSON values with [jawn](https://github.com/non/jawn).
+import scala.concurrent.duration._
+import scala.util.Random.nextInt
+import scalaz.concurrent.Task
+import scalaz.stream.{Process, io}
+import scalaz.stream.Process._
+import jawnstreamz._
 
-## Example
-
-`sbt test:run` to see it in action:
-
-```Scala
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
   implicit val facacde = jawn.ast.JawnFacade
@@ -22,4 +21,3 @@ object Example extends App {
   // First run converts process into a Task, second run executes the task for its effects
   json.run.run
 }
-```
