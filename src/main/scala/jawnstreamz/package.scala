@@ -1,76 +1,85 @@
-import jawn.{AsyncParser, Facade}
+import jawn.{ParseException, AsyncParser, Facade}
 import scodec.bits.ByteVector
-import scalaz.concurrent.Task
-import scalaz.stream.{Channel, Process, io}
+import scalaz.{Monad, Catchable}
+import scalaz.stream._
 
 /**
  * Integrates the Jawn parser with scalaz-stream
  */
 package object jawnstreamz {
   /**
-   * A channel for parsing a source of ByteVectors into JSON values.
+   * Parses to any Jawn-supported AST using the specified Async mode.
    *
-   * This is the low-level interface.  See JsonSourceSyntax for more common usages.
-   *
-   * @param mode the Jawn async mode to parse in.
-   * @param facade the Jawn facade for [[J]]
-   * @tparam J the JSON AST to return.
-   * @return a channel of Option[ByteVector] => Task[Seq[J]].  Send None to flush
-   *         the parser and terminate.
+   * @param facade the Jawn facade to materialize [[J]]
+   * @tparam J the JSON AST to return
+   * @param mode the async mode of the Jawn parser
    */
-  def jsonR[J](mode: AsyncParser.Mode)(implicit facade: Facade[J]): Channel[Task, Option[ByteVector], Seq[J]] = {
-    val acquire = Task.delay(AsyncParser[J](mode))
-    def flush(parser: AsyncParser[J]) = Task.delay(parser.finish().fold(throw _, identity))
-    def release(parser: AsyncParser[J]) = Task.delay(())
-    def step(parser: AsyncParser[J]) = Task.now { bytes: ByteVector => Task.delay {
-      parser.absorb(bytes.toByteBuffer).fold(throw _, identity)
-    }}
-    io.bufferedChannel(acquire)(flush _)(release _)(step _)
+  def parseJson[J](mode: AsyncParser.Mode)(implicit facade: Facade[J]): Process1[ByteVector, J] = {
+    import Process._
+    process1.suspend1 {
+      val parser = AsyncParser[J](mode)
+      def withParser(f: AsyncParser[J] => Either[ParseException, Seq[J]]) = emitSeq(f(parser).fold(throw _, identity))
+      receive1({bytes: ByteVector => withParser(_.absorb(bytes.toByteBuffer))}, withParser(_.finish())).repeat
+    }
   }
 
   /**
-   * Suffix syntax to asynchronously parse sources of ByteVectors to JSON.
+   * Emits individual JSON elements as they are parsed.
    *
-   * @param source the source process
+   * @param facade the Jawn facade to materialize [[J]]
+   * @tparam J the JSON AST to return
    */
-  implicit class JsonSourceSyntax(source: Process[Task, ByteVector]) {
+  def parseJsonStream[J](implicit facade: Facade[J]): Process1[ByteVector, J] = parseJson(AsyncParser.ValueStream)
+
+  /**
+   * Emits elements of an outer JSON array as they are parsed.
+   *
+   * @param facade the Jawn facade to materialize [[J]]
+   * @tparam J the JSON AST to return
+   */
+  def unwrapJsonArray[J](implicit facade: Facade[J]): Process1[ByteVector, J] = parseJson(AsyncParser.UnwrapArray)
+
+  /**
+   * Suffix syntax and convenience methods for parseJson.
+   */
+  implicit class JsonSourceSyntax[F[_]](source: Process[F, ByteVector]) {
     import Process._
+
+    /**
+     * Parses a source of ByteVectors to any Jawn-supported AST using the specified Async mode.
+     *
+     * @param facade the Jawn facade to materialize [[J]]
+     * @tparam J the JSON AST to return
+     * @param mode the async mode of the Jawn parser
+     */
+    def parseJson[J](mode: AsyncParser.Mode)(implicit facade: Facade[J]): Process[F, J] =
+      source.pipe(jawnstreamz.parseJson(mode))
 
     /**
      * Parses the source to a single JSON value.  If the stream is empty, parses to
      * the facade's concept of jnull.
      *
-     * @param facade the Jawn facade for [[J]]
+     * @param facade the Jawn facade to materialize [[J]]
      * @tparam J the JSON AST to return
-     * @return a task containing the parsed JSON result
+     * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
      */
-    def runJson[J](implicit facade: Facade[J]): Task[J] =
-      throughJsonR(AsyncParser.SingleValue).runLastOr(facade.jnull())
+    def runJson[J](implicit F: Monad[F], C: Catchable[F], facade: Facade[J]): F[J] =
+      source.parseJson(AsyncParser.SingleValue).runLastOr(facade.jnull())
 
     /**
-     * Parses the source to a stream of JSON values.  Use if the source contains
-     * multiple JSON elements concatenated together, or if the target is a stream.
+     * Emits individual JSON elements as they are parsed.
      *
-     * @param facade the Jawn facade for [[J]]
+     * @param facade the Jawn facade to materialize [[J]]
      * @tparam J the JSON AST to return
-     * @return a process of the parsed JSON results
      */
-    def jsonStream[J](implicit facade: Facade[J]): Process[Task, J] =
-      throughJsonR(AsyncParser.ValueStream)
+    def parseJsonStream[J](implicit facade: Facade[J]): Process[F, J] = source.pipe(jawnstreamz.parseJsonStream)
 
     /**
-     * Parses the source as an array of JSON values.  Use to emit individual JSON
+     * Emits elements of an outer JSON array as they are parsed.
      *
-     * entire array is parsed.
-     *
-     * @param facade the Jawn facade for [[J]]
+     * @param facade the Jawn facade to materialize [[J]]
      * @tparam J the JSON AST to return
-     * @return a process of the JSON results wrapped in a JSON array
      */
-    def unwrapJsonArray[J](implicit facade: Facade[J]): Process[Task, J] =
-      throughJsonR(AsyncParser.UnwrapArray)
-
-    private def throughJsonR[J](mode: AsyncParser.Mode)(implicit facade: Facade[J]): Process[Task, J] =
-      source.throughOption(jsonR(mode)).flatMap(emitAll)
+    def unwrapJsonArray[J](implicit facade: Facade[J]): Process[F, J] = source.pipe(jawnstreamz.unwrapJsonArray)
   }
 }
