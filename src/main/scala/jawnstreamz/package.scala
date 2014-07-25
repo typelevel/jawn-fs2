@@ -1,5 +1,4 @@
-import jawn.{ParseException, AsyncParser, Facade}
-import scodec.bits.ByteVector
+import jawn.{AsyncParser, Facade}
 import scalaz.{Monad, Catchable}
 import scalaz.stream._
 
@@ -16,10 +15,17 @@ package object jawnstreamz {
    */
   def parseJson[A, J](mode: AsyncParser.Mode)(implicit A: Absorbable[A], facade: Facade[J]): Process1[A, J] = {
     import Process._
-    process1.suspend1 {
+    import process1._
+
+    def go(parser: AsyncParser[J]): Process1[A, J] =
+      await1[A].flatMap { a =>
+        val chunks = A.absorb(parser, a).fold(throw _, identity)
+        emitSeq(chunks) fby go(parser) orElse emitSeqLazy(parser.finish().fold(throw _, identity))
+      }
+
+    suspend1 {
       val parser = AsyncParser[J](mode)
-      def withParser(f: AsyncParser[J] => Either[ParseException, Seq[J]]) = emitSeq(f(parser).fold(throw _, identity))
-      receive1({a: A => withParser(A.absorb(_, a))}, withParser(_.finish())).repeat
+      go(parser)
     }
   }
 

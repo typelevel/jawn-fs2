@@ -43,6 +43,10 @@ class JawnStreamzSpec extends Specification {
       parse(""""byte vector"""") must_== Some(JString("byte vector"))
     }
 
+    "include output from finish" in {
+      parse("42") must_== Some(JNum(42))
+    }
+
     "be reusable" in {
       val p = parseJson[ByteVector, JValue](AsyncParser.SingleValue)
       def runIt = loadJson("single").pipe(p).runLog.run
