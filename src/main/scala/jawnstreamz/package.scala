@@ -1,4 +1,6 @@
 import jawn.{AsyncParser, Facade}
+
+import scala.language.higherKinds
 import scalaz.{Monad, Catchable}
 import scalaz.stream._
 
@@ -20,12 +22,14 @@ package object jawnstreamz {
     def go(parser: AsyncParser[J]): Process1[A, J] =
       await1[A].flatMap { a =>
         val chunks = A.absorb(parser, a).fold(throw _, identity)
-        emitSeq(chunks) fby go(parser) orElse emitSeqLazy(parser.finish().fold(throw _, identity))
+        emitAll(chunks) fby go(parser)
       }
 
-    suspend1 {
+    suspend {
       val parser = AsyncParser[J](mode)
-      go(parser)
+      go(parser).onComplete {
+        emitAll(parser.finish().fold(throw _, identity))
+      }
     }
   }
 

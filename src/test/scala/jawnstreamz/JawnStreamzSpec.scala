@@ -1,25 +1,24 @@
 package jawnstreamz
 
-import java.nio.ByteBuffer
-
-import jawn.{Facade, AsyncParser}
+import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.execute.Result
 import org.specs2.mutable.Specification
+import org.specs2.time.NoTimeConversions
 import scodec.bits.ByteVector
 import scala.collection.mutable.Map
-import scalaz.\/-
+import scala.concurrent.duration._
 import scalaz.concurrent.Task
-import scalaz.stream.{Step, Process, async, io}
-import scalaz.stream.text.utf8Encode
+import scalaz.stream.Process.Step
+import scalaz.stream.{Process, async, io}
 
-class JawnStreamzSpec extends Specification {
+class JawnStreamzSpec extends Specification with NoTimeConversions {
   def loadJson(name: String, chunkSize: Int = 1024): Process[Task, ByteVector]  = {
     val is = getClass.getResourceAsStream(s"${name}.json")
-    Process.constant(chunkSize).through(io.chunkR(is))
+    Process.constant(chunkSize).toSource.through(io.chunkR(is))
   }
 
-  def taskSource[A](a: A*): Process[Task, A] = Process.apply(a: _*).asInstanceOf[Process[Task, A]]
+  def taskSource[A](a: A*): Process[Task, A] = Process(a: _*).toSource
 
   implicit val facade = JParser.facade
 
@@ -80,14 +79,15 @@ class JawnStreamzSpec extends Specification {
 
   "unwrapJsonArray" should {
     "emit an array of JSON values asynchronously" in Result.unit {
-      val (q, stringSource) = async.queue[String]
-      val stream = stringSource.unwrapJsonArray
-      q.enqueue("""[1,""")
-      val Step(first, tail, cleanup) = stream.runStep.run
-      first must_== \/-(Seq(JNum(1)))
-      q.enqueue("""2,3]""")
-      q.close
-      tail.runLog.run must_== Vector(JNum(2), JNum(3))
+      val q = async.unboundedQueue[String]
+      val stream = q.dequeue.unwrapJsonArray
+      q.enqueueOne("""[1,""").run
+      stream.step match {
+        case Step(head, _) =>
+          head.take(1).runLog.run must_== Vector(JNum(1))
+        case _ =>
+          failure("Process halted")
+      }
     }
   }
 }
