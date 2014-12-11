@@ -20,9 +20,11 @@ pomExtra := {
     <url>github.com/rossabaker/jawn-streamz</url>
   </scm>
   <developers>
-    <id>rossabaker</id>
-    <name>Ross A. Baker</name>
-    <email>ross@rossabaker.com</email>
+    <developer>
+      <id>rossabaker</id>
+      <name>Ross A. Baker</name>
+      <email>ross@rossabaker.com</email>
+    </developer>
   </developers>
 }
 
