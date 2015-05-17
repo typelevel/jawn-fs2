@@ -6,11 +6,11 @@ organization := "org.http4s"
 
 name := "jawn-streamz"
 
-version := "0.3.1"
+version := "0.4.0"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.10.5"
 
-crossScalaVersions := Seq("2.10.4", "2.11.4")
+crossScalaVersions := Seq("2.10.5", "2.11.6")
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-streamz</url>
@@ -45,6 +45,6 @@ val JawnVersion = "0.7.0"
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
   "org.spire-math" %% "jawn-ast" % JawnVersion % "test",
-  "org.scalaz.stream" %% "scalaz-stream" % "0.6a",
+  "org.scalaz.stream" %% "scalaz-stream" % "0.7a",
   "org.specs2" %% "specs2" % "2.4" % "test"
 )
