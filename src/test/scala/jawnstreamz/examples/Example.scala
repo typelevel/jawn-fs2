@@ -5,6 +5,7 @@ import scala.util.Random.nextInt
 import scalaz.concurrent.Task
 import scalaz.stream.{Process, io}
 import scalaz.stream.Process._
+import scalaz.stream.time.awakeEvery
 import jawnstreamz._
 
 object Example extends App {
