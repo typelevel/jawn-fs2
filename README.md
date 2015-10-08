@@ -31,7 +31,7 @@ Add to your build.sbt:
 ```
 resolvers += "bintray/rossabaker" at "http://dl.bintray.com/rossabaker/maven"
 
-libraryDependencies += "com.rossabaker" %% "jawn-streamz" % "0.1.0"
+libraryDependencies += "org.http4s" %% "jawn-streamz" % "0.1.0"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
 libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.5.4"

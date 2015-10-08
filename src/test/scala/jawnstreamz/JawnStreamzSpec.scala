@@ -12,7 +12,7 @@ import scalaz.concurrent.Task
 import scalaz.stream.Process.Step
 import scalaz.stream.{Process, async, io}
 
-class JawnStreamzSpec extends Specification with NoTimeConversions {
+class JawnStreamzSpec extends Specification {
   def loadJson(name: String, chunkSize: Int = 1024): Process[Task, ByteVector]  = {
     val is = getClass.getResourceAsStream(s"${name}.json")
     Process.constant(chunkSize).toSource.through(io.chunkR(is))
