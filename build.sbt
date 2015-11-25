@@ -23,8 +23,14 @@ pomExtra := {
   </scm>
 }
 
-developers += Developer(id = "rossabaker", name = "Ross A. Baker", email = "ross@rossabaker.com",
-                        url = new URL("https://github.com/rossabaker"))
+developers := List(
+  Developer(
+    id = "rossabaker",
+    name = "Ross A. Baker",
+    email = "ross@rossabaker.com",
+    url = new URL("https://github.com/rossabaker")
+  )
+)
 
 licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
