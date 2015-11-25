@@ -8,7 +8,7 @@ organization := "org.http4s"
 
 name := "jawn-streamz"
 
-version := "0.5.2"
+version := "0.6.0-SNAPSHOT"
 
 scalaVersion := "2.10.5"
 
