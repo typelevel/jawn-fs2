@@ -4,10 +4,8 @@ import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.execute.Result
 import org.specs2.mutable.Specification
-import org.specs2.time.NoTimeConversions
 import scodec.bits.ByteVector
 import scala.collection.mutable.Map
-import scala.concurrent.duration._
 import scalaz.concurrent.Task
 import scalaz.stream.Process.Step
 import scalaz.stream.{Process, async, io}
@@ -24,7 +22,7 @@ class JawnStreamzSpec extends Specification {
 
   "parseJson" should {
     def parse[A: Absorbable](a: A*): Option[JValue] =
-      taskSource(a: _*).parseJson(AsyncParser.SingleValue).runLog.run.headOption
+      taskSource(a: _*).parseJson(AsyncParser.SingleValue).runLog.unsafePerformSync.headOption
 
     "absorb strings" in {
       parse(""""string"""") must_== Some(JString("string"))
@@ -48,28 +46,28 @@ class JawnStreamzSpec extends Specification {
 
     "be reusable" in {
       val p = parseJson[ByteVector, JValue](AsyncParser.SingleValue)
-      def runIt = loadJson("single").pipe(p).runLog.run
+      def runIt = loadJson("single").pipe(p).runLog.unsafePerformSync
       runIt must_== runIt
     }
   }
 
   "runJson" should {
     "return a single JSON value" in {
-      loadJson("single").runJson.run must_== JObject(Map("one" -> JNum(1L)))
+      loadJson("single").runJson.unsafePerformSync must_== JObject(Map("one" -> JNum(1L)))
     }
 
     "return a single JSON value from multiple chunks" in {
-      loadJson("single", 1).runJson.run must_== JObject(Map("one" -> JNum(1L)))
+      loadJson("single", 1).runJson.unsafePerformSync must_== JObject(Map("one" -> JNum(1L)))
     }
 
     "return JNull for empty source" in {
-      taskSource(ByteVector.empty).runJson.run must_== JNull
+      taskSource(ByteVector.empty).runJson.unsafePerformSync must_== JNull
     }
   }
 
   "parseJsonStream" should {
     "return a stream of JSON values" in {
-      loadJson("stream").parseJsonStream.runLog.run must_== Vector(
+      loadJson("stream").parseJsonStream.runLog.unsafePerformSync must_== Vector(
         JObject(Map("one" -> JNum(1L))),
         JObject(Map("two" -> JNum(2L))),
         JObject(Map("three" -> JNum(3L)))
@@ -81,10 +79,10 @@ class JawnStreamzSpec extends Specification {
     "emit an array of JSON values asynchronously" in Result.unit {
       val q = async.unboundedQueue[String]
       val stream = q.dequeue.unwrapJsonArray
-      q.enqueueOne("""[1,""").run
+      q.enqueueOne("""[1,""").unsafePerformSync
       stream.step match {
         case Step(head, _) =>
-          head.take(1).runLog.run must_== Vector(JNum(1))
+          head.take(1).runLog.unsafePerformSync must_== Vector(JNum(1))
         case _ =>
           failure("Process halted")
       }

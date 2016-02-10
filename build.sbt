@@ -49,6 +49,6 @@ val JawnVersion = "0.8.3"
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
   "org.spire-math" %% "jawn-ast" % JawnVersion % "test",
-  "org.scalaz.stream" %% "scalaz-stream" % "0.8",
-  "org.specs2" %% "specs2-core" % "3.6.5" % "test"
+  "org.scalaz.stream" %% "scalaz-stream" % "0.8a",
+  "org.specs2" %% "specs2-core" % "3.7" % "test"
 )
