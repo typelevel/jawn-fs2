@@ -8,7 +8,7 @@ organization := "org.http4s"
 
 name := "jawn-streamz"
 
-version := "0.8.0"
+version := "0.8.1"
 
 scalaVersion := "2.10.6"
 
@@ -44,7 +44,7 @@ scalacOptions ++= Seq(
   "-feature"
 )
 
-val JawnVersion = "0.8.3"
+val JawnVersion = "0.8.4"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
