@@ -10,9 +10,9 @@ name := "jawn-streamz"
 
 version := "0.7.0"
 
-scalaVersion := "2.10.5"
+scalaVersion := "2.10.6"
 
-crossScalaVersions := Seq("2.10.5", "2.11.7")
+crossScalaVersions := Seq("2.10.6", "2.11.7")
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-streamz</url>
