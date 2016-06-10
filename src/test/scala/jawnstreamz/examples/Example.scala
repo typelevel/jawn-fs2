@@ -22,6 +22,6 @@ object Example extends App {
   val laggedSource = jsonSource.zipWith(awakeEvery(nextInt(1000).millis))((chunk, _) => chunk)
   // Print each element of the JSON array as we read it
   val json = laggedSource.unwrapJsonArray.map(_.toString()).to(io.stdOutLines)
-  // run converts process into a Task, unsafePerformSync executes the task for its effects
-  json.run.unsafePerformSync
+  // run converts process into a Task, second run executes the task for its effects
+  json.run.run
 }
