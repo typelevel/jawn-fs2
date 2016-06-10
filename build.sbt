@@ -28,7 +28,7 @@ def specs2Version(scalazVersion: String) =
 
 scalazVersion := "7.1.7"
 
-version := s"0.9.0${scalazCrossBuildSuffix(scalazVersion.value)}-SNAPSHOT"
+version := s"0.9.0${scalazCrossBuildSuffix(scalazVersion.value)}"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-streamz</url>
