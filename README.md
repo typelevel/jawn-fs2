@@ -10,7 +10,7 @@ to JSON values with [jawn](https://github.com/non/jawn).
 ```Scala
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facacde = jawn.ast.JawnFacade
+  implicit val facade = jawn.ast.JawnFacade
   // Read up to 64 bytes at a time
   val chunkSizes: Process[Task, Int] = emitAll(Stream.continually(nextInt(64)))
   // From JSON on disk
