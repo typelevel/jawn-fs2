@@ -8,6 +8,8 @@ to JSON values with [jawn](https://github.com/non/jawn).
 `sbt test:run` to see it in action:
 
 ```Scala
+import jawnstreamz._
+
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
   implicit val facade = jawn.ast.JawnFacade
