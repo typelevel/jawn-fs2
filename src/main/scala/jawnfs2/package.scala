@@ -35,6 +35,15 @@ package object jawnfs2 {
   }
 
   /**
+    * Emits individual JSON elements as they are parsed.
+    *
+    * @param facade the Jawn facade to materialize [[J]]
+    * @tparam J the JSON AST to return
+    */
+  def parseJsonStream[F[_], A, J](implicit A: Absorbable[A], facade: Facade[J]): Pipe[F, A, J] =
+    parseJson(AsyncParser.ValueStream)
+
+  /**
     * Suffix syntax and convenience methods for parseJson
     */
   implicit class JsonStreamSyntax[F[_], O](stream: Stream[F, O]) {
@@ -59,5 +68,14 @@ package object jawnfs2 {
       */
     def runJson[J](implicit F: Monad[F], C: Catchable[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
       stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
+
+    /**
+      * Emits individual JSON elements as they are parsed.
+      *
+      * @param facade the Jawn facade to materialize [[J]]
+      * @tparam J the JSON AST to return
+      */
+    def parseJsonStream[J](implicit absorbable: Absorbable[O], facade: Facade[J]): Stream[F, J] =
+      stream.through(jawnfs2.parseJsonStream)
   }
 }

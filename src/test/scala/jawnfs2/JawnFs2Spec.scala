@@ -2,11 +2,12 @@ package jawnfs2
 
 import java.nio.ByteBuffer
 
-import fs2.{io, Stream, Task}
+import fs2.{Stream, Task, io}
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
 import scodec.bits.ByteVector
+
 import scala.collection.mutable
 
 class JawnFs2Spec extends Specification {
@@ -61,6 +62,16 @@ class JawnFs2Spec extends Specification {
 
     "return JNull for empty source" in {
       Stream[Task, ByteVector](ByteVector.empty).runJson.unsafeRun must_== JNull
+    }
+  }
+
+  "parseJsonStream" should {
+    "return a stream of JSON values" in {
+      loadJson("stream").parseJsonStream.runLog.unsafeRun must_== Vector(
+        JObject(mutable.Map("one"   -> JNum(1L))),
+        JObject(mutable.Map("two"   -> JNum(2L))),
+        JObject(mutable.Map("three" -> JNum(3L)))
+      )
     }
   }
 }
