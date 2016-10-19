@@ -8,22 +8,20 @@ organization := "org.http4s"
 
 name := "jawn-streamz"
 
-scalaVersion := "2.10.6"
-
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+scalaVersion := "2.11.8"
 
 val scalazVersion = settingKey[String]("The version of Scalaz used for building.")
 def scalazStreamVersion(scalazVersion: String) =
   "0.8.2" + scalazCrossBuildSuffix(scalazVersion)
 def scalazCrossBuildSuffix(scalazVersion: String) =
   VersionNumber(scalazVersion).numbers match {
-    case Seq(7, 1, _*) => ""
-    case Seq(7, 2, _*) => "a"
+    case Seq(7, 1, _ *) => ""
+    case Seq(7, 2, _ *) => "a"
   }
 def specs2Version(scalazVersion: String) =
   VersionNumber(scalazVersion).numbers match {
-    case Seq(7, 1, _*) => "3.7.2-scalaz-7.1.7"
-    case Seq(7, 2, _*) => "3.7.2"
+    case Seq(7, 1, _ *) => "3.7.2-scalaz-7.1.7"
+    case Seq(7, 2, _ *) => "3.7.2"
   }
 
 scalazVersion := "7.1.7"
@@ -60,11 +58,16 @@ scalacOptions ++= Seq(
   "-feature"
 )
 
-val JawnVersion = "0.8.4"
+val JawnVersion = "0.10.1"
+
+val Fs2Version = "0.9.1"
 
 libraryDependencies ++= Seq(
-  "org.spire-math" %% "jawn-parser" % JawnVersion,
-  "org.spire-math" %% "jawn-ast" % JawnVersion % "test",
+  "org.spire-math"    %% "jawn-parser"   % JawnVersion,
+  "org.scodec"        %% "scodec-bits"   % "1.1.1",
   "org.scalaz.stream" %% "scalaz-stream" % scalazStreamVersion(scalazVersion.value),
-  "org.specs2" %% "specs2-core" % specs2Version(scalazVersion.value) % "test"
+  "co.fs2"            %% "fs2-core"      % Fs2Version,
+  "org.spire-math" %% "jawn-ast"    % JawnVersion                        % "test",
+  "co.fs2"         %% "fs2-io"      % Fs2Version                         % "test",
+  "org.specs2"     %% "specs2-core" % specs2Version(scalazVersion.value) % "test"
 )
