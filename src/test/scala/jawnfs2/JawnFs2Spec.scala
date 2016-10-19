@@ -2,11 +2,12 @@ package jawnfs2
 
 import java.nio.ByteBuffer
 
-import fs2.{Stream, Task, io}
+import fs2.{io, Stream, Task}
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
 import scodec.bits.ByteVector
+import scala.collection.mutable
 
 class JawnFs2Spec extends Specification {
   def loadJson(name: String, chunkSize: Int = 1024): Stream[Task, Array[Byte]] = {
@@ -43,9 +44,23 @@ class JawnFs2Spec extends Specification {
     }
 
     "be reusable" in {
-      val p = parseJson[Task, Array[Byte], JValue](AsyncParser.SingleValue)
-      def runIt = loadJson("single").through(p).runLog.unsafeRun()
+      val p     = parseJson[Task, Array[Byte], JValue](AsyncParser.SingleValue)
+      def runIt = loadJson("single").through(p).runLog.unsafeRun
       runIt must_== runIt
+    }
+  }
+
+  "runJson" should {
+    "return a single JSON value" in {
+      loadJson("single").runJson.unsafeRun must_== JObject(mutable.Map("one" -> JNum(1L)))
+    }
+
+    "return a single JSON value from multiple chunks" in {
+      loadJson("single", 1).runJson.unsafeRun must_== JObject(mutable.Map("one" -> JNum(1L)))
+    }
+
+    "return JNull for empty source" in {
+      Stream[Task, ByteVector](ByteVector.empty).runJson.unsafeRun must_== JNull
     }
   }
 }

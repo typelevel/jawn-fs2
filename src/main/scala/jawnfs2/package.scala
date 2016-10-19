@@ -1,3 +1,4 @@
+import fs2.util.{Catchable, Monad}
 import fs2.{Chunk, Handle, Pipe, Pull, Stream}
 import jawn.{AsyncParser, Facade}
 
@@ -48,5 +49,15 @@ package object jawnfs2 {
     def parseJson[J](mode: AsyncParser.Mode)(implicit absorbable: Absorbable[O], facade: Facade[J]): Stream[F, J] =
       stream.through(jawnfs2.parseJson(mode))
 
+    /**
+      * Parses the source to a single JSON value.  If the stream is empty, parses to
+      * the facade's concept of jnull.
+      *
+      * @param facade the Jawn facade to materialize [[J]]
+      * @tparam J the JSON AST to return
+      * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
+      */
+    def runJson[J](implicit F: Monad[F], C: Catchable[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
+      stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
   }
 }
