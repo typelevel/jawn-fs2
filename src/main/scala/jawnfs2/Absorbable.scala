@@ -2,6 +2,7 @@ package jawnfs2
 
 import java.nio.ByteBuffer
 
+import fs2.{Chunk, NonEmptyChunk}
 import jawn.{AsyncParser, Facade, ParseException}
 import scodec.bits.ByteVector
 
@@ -32,5 +33,11 @@ object Absorbable {
     override def absorb[J](parser: AsyncParser[J], bytes: ByteVector)(
         implicit facade: Facade[J]): Either[ParseException, Seq[J]] =
       parser.absorb(bytes.toByteBuffer)
+  }
+
+  implicit val ByteChunkAbsorbable: Absorbable[NonEmptyChunk[Byte]] = new Absorbable[NonEmptyChunk[Byte]] {
+    override def absorb[J](parser: AsyncParser[J], chunk: NonEmptyChunk[Byte])(
+        implicit facade: Facade[J]): Either[ParseException, Seq[J]] =
+      parser.absorb(chunk.toArray)
   }
 }

@@ -1,8 +1,9 @@
 package jawnfs2
 
 import java.nio.ByteBuffer
+import java.nio.file.Paths
 
-import fs2.{Stream, Task, io}
+import fs2.{io, NonEmptyChunk, Stream, Task}
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
@@ -11,10 +12,8 @@ import scodec.bits.ByteVector
 import scala.collection.mutable
 
 class JawnFs2Spec extends Specification {
-  def loadJson(name: String, chunkSize: Int = 1024): Stream[Task, Array[Byte]] = {
-    val is = Task.now(getClass.getResourceAsStream(s"$name.json"))
-    io.readInputStream(is, chunkSize).chunks.map(_.toArray)
-  }
+  def loadJson(name: String, chunkSize: Int = 1024): Stream[Task, NonEmptyChunk[Byte]] =
+    io.file.readAll[Task](Paths.get(s"testdata/$name.json"), chunkSize).chunks
 
   implicit val facade = JParser.facade
 
@@ -45,7 +44,7 @@ class JawnFs2Spec extends Specification {
     }
 
     "be reusable" in {
-      val p     = parseJson[Task, Array[Byte], JValue](AsyncParser.SingleValue)
+      val p     = parseJson[Task, NonEmptyChunk[Byte], JValue](AsyncParser.SingleValue)
       def runIt = loadJson("single").through(p).runLog.unsafeRun
       runIt must_== runIt
     }
