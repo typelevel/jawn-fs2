@@ -74,4 +74,17 @@ class JawnFs2Spec extends Specification {
       )
     }
   }
+
+  "unwrapJsonArray" should {
+    "emit an array of JSON values asynchronously" in {
+      Stream
+        .eval(Task.now("""[1,"""))
+        .unwrapJsonArray
+        .take(2)
+        .runLog
+        .unsafeRun()
+        .headOption
+        .flatMap(_.getLong) must_== Some(1L)
+    }
+  }
 }
