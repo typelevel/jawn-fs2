@@ -1,18 +1,20 @@
-# jawn-fs2
+package jawnfs2.examples
 
-Asynchronously parse [fs2](https://github.com/functional-streams-for-scala/fs2) streams
-to JSON values with [jawn](https://github.com/non/jawn).
+import java.nio.file.Paths
 
-## Example
-
-`sbt test:run` to see it in action:
-
-```Scala
+import fs2.{io, text, time, Task}
 import jawnfs2._
+
+import scala.concurrent.duration._
+import scala.util.Random.nextInt
 
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
   implicit val facacde = jawn.ast.JawnFacade
+
+  implicit val strategy  = fs2.Strategy.fromCachedDaemonPool()
+  implicit val scheduler = fs2.Scheduler.fromFixedDaemonPool(4)
+
   // From JSON on disk
   val jsonStream = io.file.readAll[Task](Paths.get("testdata/random.json"), 64)
   // Introduce up to a second of lag between chunks
@@ -22,17 +24,3 @@ object Example extends App {
   // run converts the stream into a Task, unsafeRun executes the task for its effects
   json.to(io.stdout).run.unsafeRun
 }
-```
-
-## Add jawn-fs2 to your project
-
-Add to your build.sbt:
-
-```
-resolvers += "bintray/rossabaker" at "http://dl.bintray.com/rossabaker/maven"
-
-libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.9.0"
-
-// Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.10.1"
-```
