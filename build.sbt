@@ -30,16 +30,12 @@ developers := List(
 
 licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-resolvers ++= Seq(
-  "bintray/non" at "http://dl.bintray.com/non/maven"
-)
-
 scalacOptions ++= Seq(
   "-deprecation",
   "-feature"
 )
 
-val JawnVersion = "0.10.1"
+val JawnVersion = "0.10.2"
 
 val Fs2Version = "0.9.1"
 
