@@ -2,7 +2,7 @@ package jawnfs2
 
 import java.nio.ByteBuffer
 
-import fs2.{Chunk, NonEmptyChunk}
+import fs2.Chunk
 import jawn.{AsyncParser, Facade, ParseException}
 
 /**
@@ -13,14 +13,14 @@ trait Absorbable[A] {
 }
 
 object Absorbable {
-  implicit val ByteBufferAbsorbable: Absorbable[ByteBuffer] = new Absorbable[ByteBuffer] {
-    override def absorb[J](parser: AsyncParser[J], bytes: ByteBuffer)(
-        implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(bytes)
-  }
-
   implicit val StringAbsorbable: Absorbable[String] = new Absorbable[String] {
     override def absorb[J](parser: AsyncParser[J], string: String)(
         implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(string)
+  }
+
+  implicit val ByteBufferAbsorbable: Absorbable[ByteBuffer] = new Absorbable[ByteBuffer] {
+    override def absorb[J](parser: AsyncParser[J], bytes: ByteBuffer)(
+        implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(bytes)
   }
 
   implicit val ByteArrayAbsorbable: Absorbable[Array[Byte]] = new Absorbable[Array[Byte]] {
@@ -28,9 +28,8 @@ object Absorbable {
         implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(bytes)
   }
 
-  implicit val ByteChunkAbsorbable: Absorbable[NonEmptyChunk[Byte]] = new Absorbable[NonEmptyChunk[Byte]] {
-    override def absorb[J](parser: AsyncParser[J], chunk: NonEmptyChunk[Byte])(
-        implicit facade: Facade[J]): Either[ParseException, Seq[J]] =
-      parser.absorb(chunk.toArray)
+  implicit def ByteChunkAbsorbable[C <: Chunk[Byte]]: Absorbable[C] = new Absorbable[C] {
+    override def absorb[J](parser: AsyncParser[J], chunk: C)(
+        implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(chunk.toArray)
   }
 }
