@@ -41,7 +41,6 @@ val Fs2Version = "0.9.1"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
-  "org.scodec"     %% "scodec-bits" % "1.1.1",
   "co.fs2"         %% "fs2-core"    % Fs2Version,
   "org.spire-math" %% "jawn-ast"    % JawnVersion % "test",
   "co.fs2"         %% "fs2-io"      % Fs2Version  % "test",

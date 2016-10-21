@@ -3,11 +3,10 @@ package jawnfs2
 import java.nio.ByteBuffer
 import java.nio.file.Paths
 
-import fs2.{io, NonEmptyChunk, Stream, Task}
+import fs2.{NonEmptyChunk, Stream, Task, io}
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
-import scodec.bits.ByteVector
 
 import scala.collection.mutable
 
@@ -34,11 +33,6 @@ class JawnFs2Spec extends Specification {
       parse(buffer) must_== Some(JString("byte buffer"))
     }
 
-    "absorb byte vectors" in {
-      val vector = ByteVector(""""byte vector"""".getBytes("utf-8"))
-      parse(vector) must_== Some(JString("byte vector"))
-    }
-
     "include output from finish" in {
       parse("42") must_== Some(JNum(42))
     }
@@ -60,7 +54,7 @@ class JawnFs2Spec extends Specification {
     }
 
     "return JNull for empty source" in {
-      Stream[Task, ByteVector](ByteVector.empty).runJson.unsafeRun must_== JNull
+      Stream[Task, Array[Byte]](Array.empty).runJson.unsafeRun must_== JNull
     }
   }
 
