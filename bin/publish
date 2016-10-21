@@ -1,4 +1,3 @@
 #!/bin/bash
 
-sbt "set scalazVersion := \"7.1.8\"" +clean +publishSigned
-sbt "set scalazVersion := \"7.2.3\"" +clean +publishSigned
+sbt clean publishSigned

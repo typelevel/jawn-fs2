@@ -1,41 +1,21 @@
 import java.net.URL
 
-import SonatypeKeys._
-
 sonatypeSettings
 
 organization := "org.http4s"
 
-name := "jawn-streamz"
+name := "jawn-fs2"
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
-
-val scalazVersion = settingKey[String]("The version of Scalaz used for building.")
-def scalazStreamVersion(scalazVersion: String) =
-  "0.8.2" + scalazCrossBuildSuffix(scalazVersion)
-def scalazCrossBuildSuffix(scalazVersion: String) =
-  VersionNumber(scalazVersion).numbers match {
-    case Seq(7, 1, _*) => ""
-    case Seq(7, 2, _*) => "a"
-  }
-def specs2Version(scalazVersion: String) =
-  VersionNumber(scalazVersion).numbers match {
-    case Seq(7, 1, _*) => "3.7.2-scalaz-7.1.7"
-    case Seq(7, 2, _*) => "3.7.2"
-  }
-
-scalazVersion := "7.1.7"
-
-version := s"0.9.0${scalazCrossBuildSuffix(scalazVersion.value)}"
+version := s"0.9.0"
 
 pomExtra := {
-  <url>http://github.com/rossabaker/jawn-streamz</url>
+  <url>http://github.com/rossabaker/jawn-fs2</url>
   <scm>
-    <connection>scm:git:github.com/rossabaker/jawn-streamz</connection>
-    <developerConnection>scm:git:github.com/rossabaker/jawn-streamz</developerConnection>
-    <url>github.com/rossabaker/jawn-streamz</url>
+    <connection>scm:git:github.com/rossabaker/jawn-fs2</connection>
+    <developerConnection>scm:git:github.com/rossabaker/jawn-fs2</developerConnection>
+    <url>github.com/rossabaker/jawn-fs2</url>
   </scm>
 }
 
@@ -50,21 +30,19 @@ developers := List(
 
 licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-resolvers ++= Seq(
-  "bintray/non" at "http://dl.bintray.com/non/maven",
-  "bintray/scalaz" at "http://dl.bintray.com/scalaz/releases"
-)
-
 scalacOptions ++= Seq(
   "-deprecation",
   "-feature"
 )
 
-val JawnVersion = "0.8.4"
+val JawnVersion = "0.10.2"
+
+val Fs2Version = "0.9.1"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
-  "org.spire-math" %% "jawn-ast" % JawnVersion % "test",
-  "org.scalaz.stream" %% "scalaz-stream" % scalazStreamVersion(scalazVersion.value),
-  "org.specs2" %% "specs2-core" % specs2Version(scalazVersion.value) % "test"
+  "co.fs2"         %% "fs2-core"    % Fs2Version,
+  "org.spire-math" %% "jawn-ast"    % JawnVersion % "test",
+  "co.fs2"         %% "fs2-io"      % Fs2Version  % "test",
+  "org.specs2"     %% "specs2-core" % "3.8.5"     % "test"
 )
