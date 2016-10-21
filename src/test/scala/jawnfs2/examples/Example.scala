@@ -10,7 +10,7 @@ import scala.util.Random.nextInt
 
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facacde = jawn.ast.JawnFacade
+  implicit val facade = jawn.ast.JawnFacade
 
   implicit val strategy  = fs2.Strategy.fromCachedDaemonPool()
   implicit val scheduler = fs2.Scheduler.fromFixedDaemonPool(4)

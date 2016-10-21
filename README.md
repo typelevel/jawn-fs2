@@ -12,7 +12,7 @@ import jawnfs2._
 
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facacde = jawn.ast.JawnFacade
+  implicit val facade = jawn.ast.JawnFacade
   // From JSON on disk
   val jsonStream = io.file.readAll[Task](Paths.get("testdata/random.json"), 64)
   // Introduce up to a second of lag between chunks
