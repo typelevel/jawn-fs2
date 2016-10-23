@@ -34,5 +34,16 @@ resolvers += "bintray/rossabaker" at "http://dl.bintray.com/rossabaker/maven"
 libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.9.0"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.10.1"
+libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.10.2"
 ```
+
+## Compatibility matrix
+
+In previous versions, this project was called "jawn-streamz" and
+supported scalaz-stream, the precursor to fs2.
+
+| Stream Library      | You need...                                 |
+| ------------------- | ------------------------------------------- |
+| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.0"`     |
+| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.9.0a"` |
+| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.9.0"`  |

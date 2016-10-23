@@ -8,7 +8,7 @@ name := "jawn-fs2"
 
 scalaVersion := "2.11.8"
 
-version := s"0.9.0"
+version := s"0.10.0"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-fs2</url>
