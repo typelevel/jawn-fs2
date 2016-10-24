@@ -10,7 +10,7 @@ name := "jawn-streamz"
 
 scalaVersion := "2.10.6"
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0-RC2")
 
 val scalazVersion = settingKey[String]("The version of Scalaz used for building.")
 def scalazStreamVersion(scalazVersion: String) =
@@ -22,13 +22,13 @@ def scalazCrossBuildSuffix(scalazVersion: String) =
   }
 def specs2Version(scalazVersion: String) =
   VersionNumber(scalazVersion).numbers match {
-    case Seq(7, 1, _*) => "3.7.2-scalaz-7.1.7"
-    case Seq(7, 2, _*) => "3.7.2"
+    case Seq(7, 1, _*) => "3.8.5-scalaz-7.1.10"
+    case Seq(7, 2, _*) => "3.8.5.1"
   }
 
-scalazVersion := "7.1.7"
+scalazVersion := "7.1.10"
 
-version := s"0.9.0${scalazCrossBuildSuffix(scalazVersion.value)}"
+version := s"0.9.1${scalazCrossBuildSuffix(scalazVersion.value)}-SNAPSHOT"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-streamz</url>
