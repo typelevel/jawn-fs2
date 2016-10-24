@@ -10,11 +10,20 @@ name := "jawn-streamz"
 
 scalaVersion := "2.10.6"
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0-RC2")
+scalazVersion := "7.1.10"
+
+crossScalaVersions := {
+  Seq("2.10.6", "2.11.8", "2.12.0-RC2").filterNot { sv =>
+    VersionNumber(scalazVersion.value).numbers match {
+      case Seq(7, 1, _*) => sv.startsWith("2.12.0-RC2")
+      case Seq(7, 2, _*) => false
+    }
+  }
+}
 
 val scalazVersion = settingKey[String]("The version of Scalaz used for building.")
 def scalazStreamVersion(scalazVersion: String) =
-  "0.8.2" + scalazCrossBuildSuffix(scalazVersion)
+  "0.8.5" + scalazCrossBuildSuffix(scalazVersion)
 def scalazCrossBuildSuffix(scalazVersion: String) =
   VersionNumber(scalazVersion).numbers match {
     case Seq(7, 1, _*) => ""
@@ -26,9 +35,7 @@ def specs2Version(scalazVersion: String) =
     case Seq(7, 2, _*) => "3.8.5.1"
   }
 
-scalazVersion := "7.1.10"
-
-version := s"0.9.1${scalazCrossBuildSuffix(scalazVersion.value)}-SNAPSHOT"
+version := s"0.10.0${scalazCrossBuildSuffix(scalazVersion.value)}"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-streamz</url>
@@ -60,7 +67,7 @@ scalacOptions ++= Seq(
   "-feature"
 )
 
-val JawnVersion = "0.8.4"
+val JawnVersion = "0.10.2"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
