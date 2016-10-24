@@ -39,11 +39,10 @@ libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.10.2"
 
 ## Compatibility matrix
 
-In previous versions, this project was called "jawn-streamz" and
-supported scalaz-stream, the precursor to fs2.
+A scalaz-stream port is maintained on the [jawn-streamz](https://github.com/rossabaker/jawn-fs2/tree/jawn-streamz) branch.
 
-| Stream Library      | You need...                                 |
-| ------------------- | ------------------------------------------- |
-| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.0"`     |
-| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.9.0a"` |
-| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.9.0"`  |
+| Stream Library      | You need...                                  |
+| ------------------- | -------------------------------------------- |
+| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.0"`      |
+| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.0a"` |
+| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.0"`  |
