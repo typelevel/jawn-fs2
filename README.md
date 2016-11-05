@@ -43,6 +43,6 @@ A scalaz-stream port is maintained on the [jawn-streamz](https://github.com/ross
 
 | Stream Library      | You need...                                  |
 | ------------------- | -------------------------------------------- |
-| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.0"`      |
-| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.0a"` |
-| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.0"`  |
+| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      |
+| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` |
+| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.1"`  |

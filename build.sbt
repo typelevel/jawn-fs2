@@ -7,8 +7,9 @@ organization := "org.http4s"
 name := "jawn-fs2"
 
 scalaVersion := "2.11.8"
+crossScalaVersions := Seq("2.11.8", "2.12.0")
 
-version := s"0.10.0"
+version := s"0.10.1"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-fs2</url>
@@ -35,14 +36,14 @@ scalacOptions ++= Seq(
   "-feature"
 )
 
-val JawnVersion = "0.10.2"
+val JawnVersion = "0.10.3"
 
-val Fs2Version = "0.9.1"
+val Fs2Version = "0.9.2"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
   "co.fs2"         %% "fs2-core"    % Fs2Version,
   "org.spire-math" %% "jawn-ast"    % JawnVersion % "test",
   "co.fs2"         %% "fs2-io"      % Fs2Version  % "test",
-  "org.specs2"     %% "specs2-core" % "3.8.5"     % "test"
+  "org.specs2"     %% "specs2-core" % "3.8.6"     % "test"
 )
