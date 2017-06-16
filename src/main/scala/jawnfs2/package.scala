@@ -1,5 +1,5 @@
-import fs2.util.{Catchable, Monad}
-import fs2.{Chunk, Handle, Pipe, Pull, Stream}
+import cats.effect.Sync
+import fs2.{Chunk, Pipe, Pull, Segment, Stream}
 import jawn.{AsyncParser, Facade}
 
 import scala.language.higherKinds
@@ -17,21 +17,17 @@ package object jawnfs2 {
     * @param mode the async mode of the Jawn parser
     */
   def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit A: Absorbable[A], facade: Facade[J]): Pipe[F, A, J] = {
-    def go(parser: AsyncParser[J]): Handle[F, A] => Pull[F, J, Unit] =
-      _.receive1Option {
-        case Some((a, nextHandle)) =>
+    def go(parser: AsyncParser[J]): Stream[F, A] => Pull[F, J, Unit] =
+      _.pull.uncons1.flatMap {
+        case Some((a, stream)) =>
           val chunks = A.absorb(parser, a).fold(throw _, identity)
-          Pull.output(Chunk.seq(chunks)) >> go(parser)(nextHandle)
+          Pull.output(Chunk.seq(chunks)) >> go(parser)(stream)
         case None =>
           val remaining = parser.finish().fold(throw _, identity)
-          Pull.output(Chunk.seq(remaining)) >> Pull.done
+          Pull.output(Segment.seq(remaining)) >> Pull.done
       }
 
-    (src: Stream[F, A]) =>
-      Stream.suspend {
-        val parser = AsyncParser[J](mode)
-        src.pull(go(parser))
-      }
+    src => go(AsyncParser[J](mode))(src).stream
   }
 
   /**
@@ -75,7 +71,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
-    def runJson[J](implicit F: Monad[F], C: Catchable[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
+    def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
       stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
 
     /**
