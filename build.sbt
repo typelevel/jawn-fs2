@@ -6,10 +6,10 @@ organization := "org.http4s"
 
 name := "jawn-fs2"
 
-scalaVersion := "2.12.2"
-crossScalaVersions := Seq("2.11.11", "2.12.2")
+scalaVersion := "2.12.3"
+crossScalaVersions := Seq("2.11.11", "2.12.3")
 
-version := s"0.11.0-M1"
+version := s"0.12.0-M1"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-fs2</url>
@@ -36,9 +36,9 @@ scalacOptions ++= Seq(
   "-feature"
 )
 
-val JawnVersion = "0.10.4"
+val JawnVersion = "0.11.0"
 
-val Fs2Version = "0.10.0-M2"
+val Fs2Version = "0.10.0-M5"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
