@@ -1,4 +1,4 @@
-import cats.effect.Sync
+import cats.effect.Effect
 import fs2.{Chunk, Pipe, Pull, Segment, Stream}
 import jawn.{AsyncParser, Facade}
 
@@ -21,10 +21,10 @@ package object jawnfs2 {
       _.pull.uncons1.flatMap {
         case Some((a, stream)) =>
           val chunks = A.absorb(parser, a).fold(throw _, identity)
-          Pull.output(Chunk.seq(chunks)) >> go(parser)(stream)
+          Pull.output(Chunk.seq(chunks)) *> go(parser)(stream)
         case None =>
           val remaining = parser.finish().fold(throw _, identity)
-          Pull.output(Segment.seq(remaining)) >> Pull.done
+          Pull.output(Segment.seq(remaining)) *> Pull.done
       }
 
     src => go(AsyncParser[J](mode))(src).stream
@@ -71,7 +71,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
-    def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
+    def runJson[J](implicit F: Effect[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
       stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
 
     /**
