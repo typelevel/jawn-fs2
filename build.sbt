@@ -6,10 +6,10 @@ organization := "org.http4s"
 
 name := "jawn-fs2"
 
-scalaVersion := "2.12.3"
-crossScalaVersions := Seq("2.11.11", "2.12.3")
+scalaVersion := "2.12.4"
+crossScalaVersions := Seq("2.11.11", "2.12.4")
 
-version := s"0.12.0-M2"
+version := s"0.12.0-M3"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-fs2</url>
