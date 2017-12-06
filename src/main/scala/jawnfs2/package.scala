@@ -21,10 +21,10 @@ package object jawnfs2 {
       _.pull.uncons1.flatMap {
         case Some((a, stream)) =>
           val chunks = A.absorb(parser, a).fold(throw _, identity)
-          Pull.output(Chunk.seq(chunks)) *> go(parser)(stream)
+          Pull.output(Segment.seq(chunks)) >> go(parser)(stream)
         case None =>
           val remaining = parser.finish().fold(throw _, identity)
-          Pull.output(Segment.seq(remaining)) *> Pull.done
+          Pull.output(Segment.seq(remaining)) >> Pull.done
       }
 
     src => go(AsyncParser[J](mode))(src).stream

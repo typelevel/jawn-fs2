@@ -38,12 +38,12 @@ scalacOptions ++= Seq(
 
 val JawnVersion = "0.11.0"
 
-val Fs2Version = "0.10.0-M8"
+val Fs2Version = "0.10.0-M9"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
   "co.fs2"         %% "fs2-core"    % Fs2Version,
   "org.spire-math" %% "jawn-ast"    % JawnVersion % "test",
   "co.fs2"         %% "fs2-io"      % Fs2Version  % "test",
-  "org.specs2"     %% "specs2-core" % "4.0.1"     % "test"
+  "org.specs2"     %% "specs2-core" % "4.0.2"     % "test"
 )

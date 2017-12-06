@@ -30,7 +30,7 @@ object Absorbable {
 
   implicit def ByteSegmentAbsorbable[S <: Segment[Byte, _]]: Absorbable[S] = new Absorbable[S] {
     override def absorb[J](parser: AsyncParser[J], segment: S)(
-      implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(segment.toChunk.toArray)
+      implicit facade: Facade[J]): Either[ParseException, Seq[J]] = parser.absorb(segment.force.toArray)
   }
 
   implicit def ByteChunkAbsorbable[C <: Chunk[Byte]]: Absorbable[C] = new Absorbable[C] {

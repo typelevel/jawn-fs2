@@ -13,7 +13,7 @@ import scala.collection.mutable
 
 class JawnFs2Spec extends Specification {
   def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Segment[Byte, Unit]] =
-    io.file.readAll[IO](Paths.get(s"testdata/$name.json"), chunkSize).chunks
+    io.file.readAll[IO](Paths.get(s"testdata/$name.json"), chunkSize).segments
 
   implicit val facade = JParser.facade
 
