@@ -9,7 +9,7 @@ name := "jawn-fs2"
 scalaVersion := "2.12.4"
 crossScalaVersions := Seq("2.11.11", "2.12.4")
 
-version := s"0.12.0-M3"
+version := s"0.12.0-M4"
 
 pomExtra := {
   <url>http://github.com/rossabaker/jawn-fs2</url>
