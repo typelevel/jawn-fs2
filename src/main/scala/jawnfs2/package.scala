@@ -1,5 +1,5 @@
-import cats.effect.Effect
-import fs2.{Chunk, Pipe, Pull, Segment, Stream}
+import cats.effect.Sync
+import fs2.{Pipe, Pull, Segment, Stream}
 import jawn.{AsyncParser, Facade}
 
 import scala.language.higherKinds
@@ -71,7 +71,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
-    def runJson[J](implicit F: Effect[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
+    def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
       stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
 
     /**
