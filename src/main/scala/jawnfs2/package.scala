@@ -72,7 +72,7 @@ package object jawnfs2 {
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
     def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
-      stream.parseJson(AsyncParser.SingleValue).runFold(facade.jnull())((_, json) => json)
+      stream.parseJson(AsyncParser.SingleValue).compile.fold(facade.jnull())((_, json) => json)
 
     /**
       * Emits individual JSON elements as they are parsed.

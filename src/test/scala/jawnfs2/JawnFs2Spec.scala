@@ -19,7 +19,7 @@ class JawnFs2Spec extends Specification {
 
   "parseJson" should {
     def parse[A: Absorbable](a: A*): Option[JValue] =
-      Stream(a: _*).covary[IO].parseJson(AsyncParser.SingleValue).runLog.attempt.unsafeRunSync.fold(_ => None, _.headOption)
+      Stream(a: _*).covary[IO].parseJson(AsyncParser.SingleValue).compile.toVector.attempt.unsafeRunSync.fold(_ => None, _.headOption)
 
     "absorb strings" in {
       parse(""""string"""") must_== Some(JString("string"))
@@ -40,7 +40,7 @@ class JawnFs2Spec extends Specification {
 
     "be reusable" in {
       val p     = parseJson[IO, Segment[Byte, Unit], JValue](AsyncParser.SingleValue)
-      def runIt = loadJson("single").through(p).runLog.unsafeRunSync
+      def runIt = loadJson("single").through(p).compile.toVector.unsafeRunSync
       runIt must_== runIt
     }
   }
@@ -61,7 +61,7 @@ class JawnFs2Spec extends Specification {
 
   "parseJsonStream" should {
     "return a stream of JSON values" in {
-      loadJson("stream").parseJsonStream.runLog.unsafeRunSync must_== Vector(
+      loadJson("stream").parseJsonStream.compile.toVector.unsafeRunSync must_== Vector(
         JObject(mutable.Map("one"   -> JNum(1L))),
         JObject(mutable.Map("two"   -> JNum(2L))),
         JObject(mutable.Map("three" -> JNum(3L)))
@@ -75,10 +75,11 @@ class JawnFs2Spec extends Specification {
         .eval(IO.pure("""[1,"""))
         .unwrapJsonArray
         .take(2)
-        .runLog
+        .compile
+        .toVector
         .unsafeRunSync()
         .headOption
-        .flatMap(_.getLong) must_== Some(1L)
+        .flatMap(_.getLong) must beSome(1L)
     }
   }
 }
