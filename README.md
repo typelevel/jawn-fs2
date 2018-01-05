@@ -1,4 +1,4 @@
-# jawn-fs2
+# jawn-fs2 [![Build Status](https://travis-ci.org/http4s/jawn-fs2.svg?branch=master)](https://travis-ci.org/http4s/jawn-fs2)
 
 Asynchronously parse [fs2](https://github.com/functional-streams-for-scala/fs2) streams
 to JSON values with [jawn](https://github.com/non/jawn).
