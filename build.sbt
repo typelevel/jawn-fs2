@@ -1,5 +1,3 @@
-import java.net.URL
-
 organization := "org.http4s"
 name := "jawn-fs2"
 
@@ -18,26 +16,6 @@ libraryDependencies ++= Seq(
   "co.fs2"         %% "fs2-io"      % Fs2Version  % "test",
   "org.specs2"     %% "specs2-core" % "4.0.2"     % "test"
 )
-
-pomExtra := {
-  <url>http://github.com/rossabaker/jawn-fs2</url>
-    <scm>
-      <connection>scm:git:github.com/rossabaker/jawn-fs2</connection>
-      <developerConnection>scm:git:github.com/rossabaker/jawn-fs2</developerConnection>
-      <url>github.com/rossabaker/jawn-fs2</url>
-    </scm>
-}
-
-developers := List(
-  Developer(
-    id = "rossabaker",
-    name = "Ross A. Baker",
-    email = "ross@rossabaker.com",
-    url = new URL("https://github.com/rossabaker")
-  )
-)
-
-licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
 publishTo := Some(
   if (isSnapshot.value)
