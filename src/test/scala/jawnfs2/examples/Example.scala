@@ -1,7 +1,6 @@
 package jawnfs2.examples
 
 import java.nio.file.Paths
-import java.util.concurrent.Executors
 
 import cats.effect._
 import fs2.{io, text, Scheduler}
@@ -9,7 +8,6 @@ import jawnfs2._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.util.Random.nextInt
 
 object Example extends App {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
