@@ -7,7 +7,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.4")
 version := s"0.12.0"
 
 val JawnVersion = "0.11.0"
-val Fs2Version = "0.10.0"
+val Fs2Version = "0.10.1"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
