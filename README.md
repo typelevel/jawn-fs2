@@ -34,7 +34,7 @@ resolvers += "bintray/rossabaker" at "http://dl.bintray.com/rossabaker/maven"
 libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.9.0"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.jsawn" %% "jawn-ast" % "0.10.2"
+libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.11.0"
 ```
 
 ## Compatibility matrix
