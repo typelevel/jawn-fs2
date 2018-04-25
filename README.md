@@ -29,20 +29,19 @@ object Example extends App {
 Add to your build.sbt:
 
 ```
-resolvers += "bintray/rossabaker" at "http://dl.bintray.com/rossabaker/maven"
-
-libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.9.0"
+libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.12.2"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.11.0"
+libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.12.2"
 ```
 
 ## Compatibility matrix
 
-A scalaz-stream port is maintained on the [jawn-streamz](https://github.com/rossabaker/jawn-fs2/tree/jawn-streamz) branch.
+| Stream Library      | You need...                                  | Status
+| ------------------- | -------------------------------------------- | ------
+| fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | stable
+| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
+| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` | EOL
+| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.1"`  | EOL
 
-| Stream Library      | You need...                                  |
-| ------------------- | -------------------------------------------- |
-| fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      |
-| scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` |
-| scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.1"`  |
+The legacy scalaz-stream artifacts are on the [jawn-streamz](https://github.com/rossabaker/jawn-fs2/tree/jawn-streamz) branch.
