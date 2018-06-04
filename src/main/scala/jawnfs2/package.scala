@@ -81,6 +81,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
+    @deprecated("Use runJsonOption.map(_.getOrElse(facade.jnull()))", "0.13.0")
     def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
       runJsonOption.map(_.getOrElse(facade.jnull()))
 
