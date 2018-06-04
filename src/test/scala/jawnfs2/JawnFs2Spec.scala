@@ -45,17 +45,17 @@ class JawnFs2Spec extends Specification {
     }
   }
 
-  "runJson" should {
-    "return a single JSON value" in {
-      loadJson("single").runJson.unsafeRunSync must_== JObject(mutable.Map("one" -> JNum(1L)))
+  "runJsonOption" should {
+    "return some single JSON value" in {
+      loadJson("single").runJsonOption.unsafeRunSync must_== Some(JObject(mutable.Map("one" -> JNum(1L))))
     }
 
-    "return a single JSON value from multiple chunks" in {
-      loadJson("single", 1).runJson.unsafeRunSync must_== JObject(mutable.Map("one" -> JNum(1L)))
+    "return some single JSON value from multiple chunks" in {
+      loadJson("single", 1).runJsonOption.unsafeRunSync must_== Some(JObject(mutable.Map("one" -> JNum(1L))))
     }
 
-    "return JNull for empty source" in {
-      Stream(Array.empty[Byte]).covary[IO].runJson.unsafeRunSync must_== JNull
+    "return None for empty source" in {
+      Stream(Array.empty[Byte]).covary[IO].runJsonOption.unsafeRunSync must_== None
     }
   }
 

@@ -1,11 +1,9 @@
 package jawnfs2.examples
 
-import java.nio.file.Paths
-
 import cats.effect._
-import fs2.{io, text, Scheduler}
+import fs2.{Stream, io, text}
+import java.nio.file.Paths
 import jawnfs2._
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
@@ -16,7 +14,7 @@ object Example extends App {
   // From JSON on disk
   val jsonStream = io.file.readAll[IO](Paths.get("testdata/random.json"), 64)
   // Introduce lag between chunks
-  val lag = Scheduler[IO](1).flatMap(_.awakeEvery[IO](500.millis))
+  val lag = Stream.awakeEvery[IO](500.millis)
   val laggedStream = jsonStream.chunks.zipWith(lag)((chunk, _) => chunk)
   // Print each element of the JSON array as we read it
   val json = laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
