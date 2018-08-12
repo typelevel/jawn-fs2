@@ -46,7 +46,7 @@ libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.13.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-1.0.0-M1        | `"org.http4s" %% "jawn-fs2" % "0.13.0-M1"    | beta
+| fs2-1.0.0-M3        | `"org.http4s" %% "jawn-fs2" % "0.13.0-M2"    | beta
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | stable
 | fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
 | scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` | EOL
