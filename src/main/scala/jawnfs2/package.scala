@@ -1,7 +1,7 @@
 import cats.effect.Sync
 import cats.implicits._
-import fs2.{Pipe, Pull, Segment, Stream}
-import jawn.{AsyncParser, Facade, RawFacade}
+import fs2.{Chunk, Pipe, Pull, Stream}
+import jawn.{AsyncParser, Facade, ParseException, RawFacade}
 
 import scala.language.higherKinds
 
@@ -18,15 +18,17 @@ package object jawnfs2 {
     * @param mode the async mode of the Jawn parser
     */
   def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] = {
-    def go(parser: AsyncParser[J]): Stream[F, A] => Pull[F, J, Unit] =
-      _.pull.uncons1.flatMap {
+    def go(parser: AsyncParser[J])(s: Stream[F, A]): Pull[F, J, Unit] = {
+      def handle(attempt: Either[ParseException, collection.Seq[J]]) =
+        attempt.fold(Pull.raiseError, js => Pull.output(Chunk.seq(js)))
+
+      s.pull.uncons1.flatMap {
         case Some((a, stream)) =>
-          val chunks = A.absorb(parser, a).fold(throw _, identity)
-          Pull.output(Segment.seq(chunks)) >> go(parser)(stream)
+          handle(A.absorb(parser, a)) >> go(parser)(stream)
         case None =>
-          val remaining = parser.finish().fold(throw _, identity)
-          Pull.output(Segment.seq(remaining)) >> Pull.done
+          handle(parser.finish()) >> Pull.done
       }
+    }
 
     src => go(AsyncParser[J](mode))(src).stream
   }

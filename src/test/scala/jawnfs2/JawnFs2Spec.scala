@@ -4,7 +4,8 @@ import java.nio.ByteBuffer
 import java.nio.file.Paths
 
 import cats.effect._
-import fs2.{Segment, Stream, io}
+import fs2.{Chunk, Stream}
+import fs2.io.file.readAll
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
@@ -12,8 +13,8 @@ import org.specs2.mutable.Specification
 import scala.collection.mutable
 
 class JawnFs2Spec extends Specification {
-  def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Segment[Byte, Unit]] =
-    io.file.readAll[IO](Paths.get(s"testdata/$name.json"), chunkSize).segments
+  def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
+    readAll[IO](Paths.get(s"testdata/$name.json"), chunkSize).chunks
 
   implicit val facade = JParser.facade
 
@@ -39,7 +40,7 @@ class JawnFs2Spec extends Specification {
     }
 
     "be reusable" in {
-      val p     = parseJson[IO, Segment[Byte, Unit], JValue](AsyncParser.SingleValue)
+      val p     = parseJson[IO, Chunk[Byte], JValue](AsyncParser.SingleValue)
       def runIt = loadJson("single").through(p).compile.toVector.unsafeRunSync
       runIt must_== runIt
     }
