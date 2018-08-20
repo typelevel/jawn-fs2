@@ -1,6 +1,6 @@
 package jawnfs2
 
-import fs2.{Chunk, Segment}
+import fs2.Chunk
 import java.nio.ByteBuffer
 import jawn.{AsyncParser, ParseException, RawFacade}
 
@@ -25,11 +25,6 @@ object Absorbable {
   implicit val ByteArrayAbsorbable: Absorbable[Array[Byte]] = new Absorbable[Array[Byte]] {
     override def absorb[J](parser: AsyncParser[J], bytes: Array[Byte])(
         implicit rawFacade: RawFacade[J]): Either[ParseException, Seq[J]] = parser.absorb(bytes)
-  }
-
-  implicit def ByteSegmentAbsorbable[S <: Segment[Byte, _]]: Absorbable[S] = new Absorbable[S] {
-    override def absorb[J](parser: AsyncParser[J], segment: S)(
-      implicit rawFacade: RawFacade[J]): Either[ParseException, Seq[J]] = parser.absorb(segment.force.toArray)
   }
 
   implicit def ByteChunkAbsorbable[C <: Chunk[Byte]]: Absorbable[C] = new Absorbable[C] {

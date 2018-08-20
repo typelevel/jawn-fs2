@@ -1,20 +1,21 @@
 package jawnfs2
 
+import cats.effect.{ContextShift, IO}
+import fs2.io.file.readAll
+import fs2.{Chunk, Stream}
 import java.nio.ByteBuffer
 import java.nio.file.Paths
-
-import cats.effect._
-import fs2.{Chunk, Stream}
-import fs2.io.file.readAll
 import jawn.AsyncParser
 import jawn.ast._
 import org.specs2.mutable.Specification
-
 import scala.collection.mutable
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class JawnFs2Spec extends Specification {
+  implicit val contextShift: ContextShift[IO] = IO.contextShift(global)
+
   def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
-    readAll[IO](Paths.get(s"testdata/$name.json"), chunkSize).chunks
+    readAll[IO](Paths.get(s"testdata/$name.json"), global, chunkSize).chunks
 
   implicit val facade = JParser.facade
 

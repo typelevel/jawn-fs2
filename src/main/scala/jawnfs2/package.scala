@@ -1,3 +1,4 @@
+import cats.ApplicativeError
 import cats.effect.Sync
 import cats.implicits._
 import fs2.{Chunk, Pipe, Pull, Stream}
@@ -17,10 +18,10 @@ package object jawnfs2 {
     * @tparam J the JSON AST to return
     * @param mode the async mode of the Jawn parser
     */
-  def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] = {
+  def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit F: ApplicativeError[F, Throwable], A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] = {
     def go(parser: AsyncParser[J])(s: Stream[F, A]): Pull[F, J, Unit] = {
       def handle(attempt: Either[ParseException, collection.Seq[J]]) =
-        attempt.fold(Pull.raiseError, js => Pull.output(Chunk.seq(js)))
+        attempt.fold(Pull.raiseError[F], js => Pull.output(Chunk.seq(js)))
 
       s.pull.uncons1.flatMap {
         case Some((a, stream)) =>
@@ -39,7 +40,7 @@ package object jawnfs2 {
     * @param facade the Jawn facade to materialize `J`
     * @tparam J the JSON AST to return
     */
-  def parseJsonStream[F[_], A, J](implicit A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] =
+  def parseJsonStream[F[_], A, J](implicit F: ApplicativeError[F, Throwable], A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] =
     parseJson(AsyncParser.ValueStream)
 
   /**
@@ -48,7 +49,7 @@ package object jawnfs2 {
     * @param facade the Jawn facade to materialize `J`
     * @tparam J the JSON AST to return
     */
-  def unwrapJsonArray[F[_], A, J](implicit A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] =
+  def unwrapJsonArray[F[_], A, J](implicit F: ApplicativeError[F, Throwable], A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] =
     parseJson(AsyncParser.UnwrapArray)
 
   /**
@@ -63,7 +64,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @param mode the async mode of the Jawn parser
       */
-    def parseJson[J](mode: AsyncParser.Mode)(implicit absorbable: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
+    def parseJson[J](mode: AsyncParser.Mode)(implicit F: ApplicativeError[F, Throwable], A: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
       stream.through(jawnfs2.parseJson(mode))
 
     /**
@@ -73,7 +74,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return some parsed JSON value, or None if the source is empty
       */
-    def runJsonOption[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: RawFacade[J]): F[Option[J]] =
+    def runJsonOption[J](implicit F: Sync[F], A: Absorbable[O], facade: RawFacade[J]): F[Option[J]] =
       stream.parseJson(AsyncParser.SingleValue).compile.last
 
     /**
@@ -84,7 +85,7 @@ package object jawnfs2 {
       * @return the parsed JSON value, or the facade's concept of jnull if the source is empty
       */
     @deprecated("Use runJsonOption.map(_.getOrElse(facade.jnull()))", "0.13.0")
-    def runJson[J](implicit F: Sync[F], absorbable: Absorbable[O], facade: Facade[J]): F[J] =
+    def runJson[J](implicit F: Sync[F], A: Absorbable[O], facade: Facade[J]): F[J] =
       runJsonOption.map(_.getOrElse(facade.jnull()))
 
     /**
@@ -93,7 +94,7 @@ package object jawnfs2 {
       * @param facade the Jawn facade to materialize `J`
       * @tparam J the JSON AST to return
       */
-    def parseJsonStream[J](implicit absorbable: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
+    def parseJsonStream[J](implicit F: ApplicativeError[F, Throwable], A: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
       stream.through(jawnfs2.parseJsonStream)
 
     /**
@@ -102,7 +103,7 @@ package object jawnfs2 {
       * @param facade the Jawn facade to materialize `J`
       * @tparam J the JSON AST to return
       */
-    def unwrapJsonArray[J](implicit absorbable: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
+    def unwrapJsonArray[J](implicit F: ApplicativeError[F, Throwable], A: Absorbable[O], facade: RawFacade[J]): Stream[F, J] =
       stream.through(jawnfs2.unwrapJsonArray)
   }
 }
