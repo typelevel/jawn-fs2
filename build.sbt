@@ -2,12 +2,12 @@ organization := "org.http4s"
 name := "jawn-fs2"
 
 scalaVersion := "2.12.6"
-crossScalaVersions := Seq("2.11.12", scalaVersion.value)
+crossScalaVersions := Seq("2.11.12", scalaVersion.value, "2.13.0-M4")
 
-version := s"0.13.0-M3"
+version := s"0.13.0-M4"
 
 val JawnVersion   = "0.13.0"
-val Fs2Version    = "1.0.0-M4"
+val Fs2Version    = "1.0.0-M5"
 val Specs2Version = "4.3.3"
 
 libraryDependencies ++= Seq(
