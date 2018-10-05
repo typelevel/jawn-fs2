@@ -48,18 +48,18 @@ object Example extends IOApp {
 Add to your build.sbt:
 
 ```
-libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.13.0-RC1"
+libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.13.0"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.13.0-RC1"
+libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.13.0"
 ```
 
 ## Compatibility matrix
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-1.0.0-RC1       | `"org.http4s" %% "jawn-fs2" % "0.13.0-RC1"   | beta
-| fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | stable
+| fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.13.0"       | stable
+| fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
 | fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
 | scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` | EOL
 | scalaz-stream-0.8.x | `"org.http4s" %% "jawn-streamz" % "0.10.1"`  | EOL
