@@ -5,9 +5,9 @@ import fs2.io.file.readAll
 import fs2.{Chunk, Stream}
 import java.nio.ByteBuffer
 import java.nio.file.Paths
-import jawn.AsyncParser
-import jawn.ast._
 import org.specs2.mutable.Specification
+import org.typelevel.jawn.AsyncParser
+import org.typelevel.jawn.ast._
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 
