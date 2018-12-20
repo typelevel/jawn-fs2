@@ -21,7 +21,7 @@ import scala.concurrent.duration._
 
 object Example extends IOApp {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facade = jawn.ast.JawnFacade
+  implicit val facade = org.typelevel.jawn.ast.JawnFacade
 
   val blockingResource: Resource[IO, ExecutionContext] =
     Resource.make(IO(Executors.newCachedThreadPool()))(es => IO(es.shutdown()))
@@ -58,7 +58,7 @@ libraryDependencies += "org.spire-math" %% "jawn-ast" % "0.13.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.13.0"`      | stable
+| fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.0"`      | stable
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
 | fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
 | scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` | EOL

@@ -2,7 +2,7 @@ import cats.ApplicativeError
 import cats.effect.Sync
 import cats.implicits._
 import fs2.{Chunk, Pipe, Pull, Stream}
-import jawn.{AsyncParser, Facade, ParseException, RawFacade}
+import org.typelevel.jawn.{AsyncParser, Facade, ParseException, RawFacade}
 
 import scala.language.higherKinds
 
