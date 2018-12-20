@@ -8,7 +8,7 @@ version := s"0.13.0"
 
 val JawnVersion   = "0.13.0"
 val Fs2Version    = "1.0.0"
-val Specs2Version = "4.3.3"
+val Specs2Version = "4.3.6"
 
 libraryDependencies ++= Seq(
   "org.spire-math" %% "jawn-parser" % JawnVersion,
