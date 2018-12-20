@@ -2,7 +2,7 @@ package jawnfs2
 
 import fs2.Chunk
 import java.nio.ByteBuffer
-import jawn.{AsyncParser, ParseException, RawFacade}
+import org.typelevel.jawn.{AsyncParser, ParseException, RawFacade}
 
 /**
   * Type class that can be absorbed by a Jawn AsyncParser

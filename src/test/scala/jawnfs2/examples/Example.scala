@@ -6,12 +6,13 @@ import fs2.{Stream, io, text}
 import java.nio.file.Paths
 import java.util.concurrent.Executors
 import jawnfs2._
+import org.typelevel.jawn.ast.JawnFacade
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 object Example extends IOApp {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facade = jawn.ast.JawnFacade
+  implicit val facade = JawnFacade
 
   val blockingResource: Resource[IO, ExecutionContext] =
     Resource.make(IO(Executors.newCachedThreadPool()))(es => IO(es.shutdown()))
