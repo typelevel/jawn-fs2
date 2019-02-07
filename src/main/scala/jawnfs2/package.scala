@@ -4,8 +4,6 @@ import cats.implicits._
 import fs2.{Chunk, Pipe, Pull, Stream}
 import org.typelevel.jawn.{AsyncParser, Facade, ParseException, RawFacade}
 
-import scala.language.higherKinds
-
 /**
   * Integrates the Jawn parser with fs2
   */
@@ -21,7 +19,7 @@ package object jawnfs2 {
   def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit F: ApplicativeError[F, Throwable], A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] = {
     def go(parser: AsyncParser[J])(s: Stream[F, A]): Pull[F, J, Unit] = {
       def handle(attempt: Either[ParseException, collection.Seq[J]]) =
-        attempt.fold(Pull.raiseError[F], js => Pull.output(Chunk.seq(js)))
+        attempt.fold(Pull.raiseError[F], js => Pull.output(Chunk.seq(new SeqWrapper(js))))
 
       s.pull.uncons1.flatMap {
         case Some((a, stream)) =>

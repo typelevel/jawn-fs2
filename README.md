@@ -38,7 +38,7 @@ object Example extends IOApp {
       // Print each element of the JSON array as we read it
       val json = laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
       // run converts the stream into an IO, unsafeRunSync executes the IO for its effects
-      json.to[IO](io.stdout(blockingEC)).compile.drain.as(ExitCode.Success)
+      json.through(io.stdout(blockingEC)).compile.drain.as(ExitCode.Success)
     }
 }
 ```
