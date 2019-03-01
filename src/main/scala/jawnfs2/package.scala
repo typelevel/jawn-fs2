@@ -19,7 +19,7 @@ package object jawnfs2 {
     */
   def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit F: ApplicativeError[F, Throwable], A: Absorbable[A], facade: RawFacade[J]): Pipe[F, A, J] = {
     def go(parser: AsyncParser[J])(s: Stream[F, A]): Pull[F, J, Unit] = {
-      // fs2-1.0.3 uses immutable.Seq in 2.13.  This dance should
+      // fs2-1.0.4 uses immutable.Seq in 2.13.  This dance should
       // not be necessary after https://github.com/functional-streams-for-scala/fs2/pull/1413
       def wrap(js: collection.Seq[J]) = js match {
         case b: Buffer[J] =>
