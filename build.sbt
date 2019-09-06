@@ -7,7 +7,7 @@ crossScalaVersions := Seq("2.11.12", scalaVersion.value, "2.13.0")
 version := "0.15.0-M1"
 
 val JawnVersion   = "0.14.2"
-val Fs2Version    = "1.1.0-M1"
+val Fs2Version    = "1.1.0-M2"
 val Specs2Version = "4.7.0"
 
 libraryDependencies ++= Seq(
