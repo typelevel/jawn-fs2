@@ -4,7 +4,7 @@ name := "jawn-fs2"
 scalaVersion := "2.12.8"
 crossScalaVersions := Seq("2.11.12", scalaVersion.value, "2.13.0")
 
-version := "0.15.0-M1"
+version := "0.15.0"
 
 val JawnVersion   = "0.14.2"
 val Fs2Version    = "2.0.0"
