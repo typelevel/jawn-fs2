@@ -14,3 +14,9 @@ matrix:
 
 script:
 - sbt ++$TRAVIS_SCALA_VERSION test
+
+cache:
+  directories:
+  - "$HOME/.cache"
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot"
