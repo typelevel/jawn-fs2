@@ -8,7 +8,7 @@ version := "0.15.0"
 
 val JawnVersion   = "0.14.3"
 val Fs2Version    = "2.1.0"
-val Specs2Version = "4.8.1"
+val Specs2Version = "4.8.3"
 
 libraryDependencies ++= Seq(
   "org.typelevel"  %% "jawn-parser" % JawnVersion,
