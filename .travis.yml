@@ -6,8 +6,6 @@ matrix:
   - jdk: openjdk8
     scala: 2.12.8
   - jdk: openjdk8
-    scala: 2.11.12
-  - jdk: openjdk8
     scala: 2.13.0
   - jdk: openjdk11
     scala: 2.12.8
