@@ -48,10 +48,10 @@ object Example extends IOApp {
 Add to your build.sbt:
 
 ```
-libraryDependencies += "org.http4s" %% "jawn-fs2" % "0.15.0"
+libraryDependencies += "org.http4s" %% "jawn-fs2" % "1.0.0"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
-libraryDependencies += "org.typelevel" %% "jawn-ast" % "0.15.0"
+libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
 ```
 
 ## Compatibility matrix
