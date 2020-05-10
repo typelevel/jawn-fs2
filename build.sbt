@@ -1,7 +1,7 @@
 organization := "org.http4s"
 name := "jawn-fs2"
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.2"
 crossScalaVersions := Seq("2.12.10", scalaVersion.value)
 
 version := "1.0.0"
