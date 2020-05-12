@@ -38,14 +38,22 @@ class JawnFs2Spec extends Specification {
   withResource(Blocker[IO]) { blocker =>
     "parseJson" should {
       def parse[A: Absorbable](a: A*): Option[JValue] =
-        Stream(a: _*).covary[IO].parseJson(AsyncParser.SingleValue).compile.toVector.attempt.unsafeRunSync.fold(_ => None, _.headOption)
+        Stream(a: _*)
+          .covary[IO]
+          .parseJson(AsyncParser.SingleValue)
+          .compile
+          .toVector
+          .attempt
+          .unsafeRunSync
+          .fold(_ => None, _.headOption)
 
       "absorb strings" in {
         parse(""""string"""") must_== Some(JString("string"))
       }
 
       "absorb byte arrays" in {
-        parse("""["byte array"]""".getBytes("utf-8")) must_== Some(JArray(Array(JString("byte array"))))
+        parse("""["byte array"]""".getBytes("utf-8")) must_== Some(
+          JArray(Array(JString("byte array"))))
       }
 
       "absorb byte buffers" in {
@@ -58,7 +66,7 @@ class JawnFs2Spec extends Specification {
       }
 
       "be reusable" in {
-        val p     = parseJson[IO, Chunk[Byte], JValue](AsyncParser.SingleValue)
+        val p = parseJson[IO, Chunk[Byte], JValue](AsyncParser.SingleValue)
         def runIt = loadJson("single", blocker).through(p).compile.toVector.unsafeRunSync
         runIt must_== runIt
       }
@@ -66,11 +74,13 @@ class JawnFs2Spec extends Specification {
 
     "runJsonOption" should {
       "return some single JSON value" in {
-        loadJson("single", blocker).runJsonOption.unsafeRunSync must_== Some(JObject(mutable.Map("one" -> JNum(1L))))
+        loadJson("single", blocker).runJsonOption.unsafeRunSync must_== Some(
+          JObject(mutable.Map("one" -> JNum(1L))))
       }
 
       "return some single JSON value from multiple chunks" in {
-        loadJson("single", blocker, 1).runJsonOption.unsafeRunSync must_== Some(JObject(mutable.Map("one" -> JNum(1L))))
+        loadJson("single", blocker, 1).runJsonOption.unsafeRunSync must_== Some(
+          JObject(mutable.Map("one" -> JNum(1L))))
       }
 
       "return None for empty source" in {
@@ -81,8 +91,8 @@ class JawnFs2Spec extends Specification {
     "parseJsonStream" should {
       "return a stream of JSON values" in {
         loadJson("stream", blocker).parseJsonStream.compile.toVector.unsafeRunSync must_== Vector(
-          JObject(mutable.Map("one"   -> JNum(1L))),
-          JObject(mutable.Map("two"   -> JNum(2L))),
+          JObject(mutable.Map("one" -> JNum(1L))),
+          JObject(mutable.Map("two" -> JNum(2L))),
           JObject(mutable.Map("three" -> JNum(3L)))
         )
       }
