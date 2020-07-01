@@ -11,7 +11,6 @@ to JSON values with [jawn](https://github.com/non/jawn).
 package jawnfs2.examples
 
 import cats.effect._
-import cats.implicits._
 import fs2.{Stream, io, text}
 import java.nio.file.Paths
 import java.util.concurrent.Executors
