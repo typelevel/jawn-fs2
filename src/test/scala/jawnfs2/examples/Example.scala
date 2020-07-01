@@ -1,7 +1,6 @@
 package jawnfs2.examples
 
 import cats.effect._
-import cats.implicits._
 import fs2.{Stream, io, text}
 import java.nio.file.Paths
 import jawnfs2._
