@@ -1,5 +1,5 @@
 import cats.ApplicativeError
-import cats.effect.Sync
+import cats.effect.Concurrent
 import fs2.{Chunk, Pipe, Pull, Stream}
 import org.typelevel.jawn.{AsyncParser, Facade, ParseException}
 
@@ -83,7 +83,7 @@ package object jawnfs2 {
       * @tparam J the JSON AST to return
       * @return some parsed JSON value, or None if the source is empty
       */
-    def runJsonOption[J](implicit F: Sync[F], A: Absorbable[O], facade: Facade[J]): F[Option[J]] =
+    def runJsonOption[J](implicit F: Concurrent[F], A: Absorbable[O], facade: Facade[J]): F[Option[J]] =
       stream.parseJson(AsyncParser.SingleValue).compile.last
 
     /**
