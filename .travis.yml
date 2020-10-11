@@ -4,11 +4,11 @@ language: scala
 matrix:
   include:
   - jdk: openjdk8
-    scala: 2.12.10
+    scala: 2.12.12
   - jdk: openjdk8
-    scala: 2.13.2
+    scala: 2.13.3
   - jdk: openjdk11
-    scala: 2.13.2
+    scala: 2.13.3
 
 script:
 - sbt ++$TRAVIS_SCALA_VERSION test
