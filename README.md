@@ -10,35 +10,31 @@ to JSON values with [jawn](https://github.com/non/jawn).
 ```Scala
 package jawnfs2.examples
 
-import cats.effect._
-import fs2.{Stream, io, text}
+import cats.effect.{IO, IOApp, ExitCode}
+import fs2.{io, text, Stream}
+import fs2.io.file.Files
 import java.nio.file.Paths
-import java.util.concurrent.Executors
 import jawnfs2._
-import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 object Example extends IOApp {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
   implicit val facade = org.typelevel.jawn.ast.JawnFacade
 
-  val blockingResource: Resource[IO, ExecutionContext] =
-    Resource.make(IO(Executors.newCachedThreadPool()))(es => IO(es.shutdown()))
-      .map(ExecutionContext.fromExecutorService)
-
-  def run(args: List[String]) =
-    // Uses blocking IO, so provide an appropriate thread pool
-    blockingResource.use { blockingEC =>
-      // From JSON on disk
-      val jsonStream = io.file.readAll[IO](Paths.get("testdata/random.json"), blockingEC, 64)
-      // Simulate lag between chunks
-      val lag = Stream.awakeEvery[IO](100.millis)
-      val laggedStream = jsonStream.chunks.zipWith(lag)((chunk, _) => chunk)
-      // Print each element of the JSON array as we read it
-      val json = laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
-      // run converts the stream into an IO, unsafeRunSync executes the IO for its effects
-      json.through(io.stdout(blockingEC)).compile.drain.as(ExitCode.Success)
-    }
+  def run(args: List[String]) = {
+    // From JSON on disk
+    val jsonStream = Files[IO].readAll(Paths.get("testdata/random.json"), 64)
+    // Simulate lag between chunks
+    val lag = Stream.awakeEvery[IO](100.millis)
+    val laggedStream = jsonStream.chunks.zipWith(lag)((chunk, _) => chunk)
+    // Print each element of the JSON array as we read it
+    val json = laggedStream.unwrapJsonArray
+      .map(_.toString)
+      .intersperse("\n")
+      .through(text.utf8Encode)
+    // run converts the stream into an IO, unsafeRunSync executes the IO for its effects
+    json.through(io.stdout).compile.drain.as(ExitCode.Success)
+  }
 }
 ```
 
@@ -57,7 +53,8 @@ libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "0.15.0"`      | stable
+| fs2-3.x             | `"org.http4s" %% "jawn-fs2" % "2.x"`         | development
+| fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "1.0.0"`       | stable
 | fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.2"`      | stable
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
 | fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
