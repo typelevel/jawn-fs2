@@ -1,11 +1,10 @@
-package jawnfs2
+package org.typelevel.jawn.fs2
 
 import fs2.Chunk
 import java.nio.ByteBuffer
 import org.typelevel.jawn.{AsyncParser, Facade, ParseException}
 
-/**
-  * Type class that can be absorbed by a Jawn AsyncParser
+/** Type class that can be absorbed by a Jawn AsyncParser
   */
 trait Absorbable[A] {
   def absorb[J](parser: AsyncParser[J], a: A)(implicit
