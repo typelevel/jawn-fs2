@@ -1,11 +1,11 @@
-package jawnfs2.examples
+package org.typelevel.jawn.fs2.examples
 
 import cats.effect._
 import fs2.io.file.Files
 import fs2.{Stream, io, text}
 import java.nio.file.Paths
-import jawnfs2._
 import org.typelevel.jawn.ast.JawnFacade
+import org.typelevel.jawn.fs2._
 import scala.concurrent.duration._
 
 object Example extends IOApp {

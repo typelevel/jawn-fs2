@@ -1,4 +1,4 @@
-package jawnfs2
+package org.typelevel.jawn.fs2
 
 import cats.effect.unsafe.IORuntime
 import cats.effect.{IO, unsafe}
@@ -35,7 +35,8 @@ class JawnFs2Spec extends Specification {
     }
 
     "absorb byte arrays" in {
-      parse("""["byte array"]""".getBytes("utf-8")) must beSome(JArray(Array(JString("byte array"))))
+      parse("""["byte array"]""".getBytes("utf-8")) must beSome(
+        JArray(Array(JString("byte array"))))
     }
 
     "absorb byte buffers" in {
@@ -58,11 +59,13 @@ class JawnFs2Spec extends Specification {
 
   "runJsonOption" should {
     "return some single JSON value" in {
-      loadJson("single").runJsonOption.unsafeRunSync() must beSome(JObject(mutable.Map("one" -> JNum(1L))))
+      loadJson("single").runJsonOption.unsafeRunSync() must beSome(
+        JObject(mutable.Map("one" -> JNum(1L))))
     }
 
     "return some single JSON value from multiple chunks" in {
-      loadJson("single", 1).runJsonOption.unsafeRunSync() must beSome(JObject(mutable.Map("one" -> JNum(1L))))
+      loadJson("single", 1).runJsonOption.unsafeRunSync() must beSome(
+        JObject(mutable.Map("one" -> JNum(1L))))
     }
 
     "return None for empty source" in {

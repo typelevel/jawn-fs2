@@ -1,4 +1,4 @@
-package jawnfs2
+package org.typelevel.jawn.fs2
 
 private[this] class SeqWrapper[A](underlying: collection.Seq[A])
     extends collection.immutable.Seq[A] {
