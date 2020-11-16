@@ -1,14 +1,14 @@
 organization := "org.http4s"
 name := "jawn-fs2"
 
-ThisBuild / crossScalaVersions := Seq("2.12.10", "2.13.1")
+ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 
-version := "1.0.0"
+version := "1.0.1-SNAPSHOT"
 
 val JawnVersion   = "1.0.0"
-val Fs2Version    = "2.2.2"
-val Specs2Version = "4.8.3"
+val Fs2Version    = "2.4.5"
+val Specs2Version = "4.10.5"
 
 libraryDependencies ++= Seq(
   "org.typelevel"  %% "jawn-parser" % JawnVersion,
