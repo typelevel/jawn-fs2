@@ -1,8 +1,8 @@
 organization := "org.http4s"
 name := "jawn-fs2"
 
-scalaVersion := "2.13.1"
-crossScalaVersions := Seq("2.12.10", scalaVersion.value)
+ThisBuild / crossScalaVersions := Seq("2.12.10", "2.13.1")
+ThisBuild / scalaVersion := crossScalaVersions.value.last
 
 version := "1.0.0"
 
@@ -24,3 +24,5 @@ publishTo := Some(
   else
     Opts.resolver.sonatypeStaging
 )
+
+ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
