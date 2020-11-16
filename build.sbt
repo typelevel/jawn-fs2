@@ -24,3 +24,5 @@ publishTo := Some(
   else
     Opts.resolver.sonatypeStaging
 )
+
+ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
