@@ -7,7 +7,7 @@ ThisBuild / scalaVersion := crossScalaVersions.value.last
 version := "1.0.1-SNAPSHOT"
 
 val JawnVersion   = "1.0.1"
-val Fs2Version    = "3.0.0-M1"
+val Fs2Version    = "3.0.0-M3"
 val Specs2Version = "4.10.5"
 
 libraryDependencies ++= Seq(
