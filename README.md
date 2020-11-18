@@ -8,7 +8,7 @@ to JSON values with [jawn](https://github.com/non/jawn).
 `sbt test:run` to see it in action:
 
 ```Scala
-package jawnfs2.examples
+package com.example
 
 import cats.effect.{IO, IOApp, ExitCode}
 import fs2.{io, text, Stream}
@@ -38,12 +38,20 @@ object Example extends IOApp {
 }
 ```
 
+### Migration note
+
+In jawn-fs2-2.x, the root package changes from `jawn.fs2` to `org.typelevel.jawn.fs2`.
+
 ## Add jawn-fs2 to your project
 
 Add to your build.sbt:
 
 ```
+// For cats-effect-2
 libraryDependencies += "org.http4s" %% "jawn-fs2" % "1.0.0"
+
+// For cats-effect-3
+libraryDependencies += "org.typelevel" %% "jawn-fs2" % "2.0.0-M1"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
 libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
@@ -53,7 +61,7 @@ libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-3.x             | `"org.http4s" %% "jawn-fs2" % "2.x"`         | development
+| fs2-3.x             | `"org.http4s" %% "jawn-fs2" % "2.0.0-M1"`    | milestone
 | fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "1.0.0"`       | stable
 | fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.2"`      | EOL
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
