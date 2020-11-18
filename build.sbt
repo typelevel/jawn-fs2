@@ -1,10 +1,10 @@
-organization := "org.http4s"
+organization := "org.typelevel"
 name := "jawn-fs2"
 
 ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.3")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 
-version := "1.0.1-SNAPSHOT"
+version := "2.0.0-M2"
 
 val JawnVersion   = "1.0.1"
 val Fs2Version    = "3.0.0-M3"

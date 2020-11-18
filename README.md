@@ -51,7 +51,7 @@ Add to your build.sbt:
 libraryDependencies += "org.http4s" %% "jawn-fs2" % "1.0.0"
 
 // For cats-effect-3
-libraryDependencies += "org.typelevel" %% "jawn-fs2" % "2.0.0-M1"
+libraryDependencies += "org.typelevel" %% "jawn-fs2" % "2.0.0-M2"
 
 // Pick your AST: https://github.com/non/jawn#supporting-external-asts-with-jawn
 libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
@@ -61,7 +61,7 @@ libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-3.x             | `"org.http4s" %% "jawn-fs2" % "2.0.0-M1"`    | milestone
+| fs2-3.x             | `"org.typelevel" %% "jawn-fs2" % "2.0.0-M2"` | milestone
 | fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "1.0.0"`       | stable
 | fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.2"`      | EOL
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
