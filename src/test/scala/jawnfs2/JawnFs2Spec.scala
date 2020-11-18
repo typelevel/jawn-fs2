@@ -1,3 +1,9 @@
+/*
+ * Copyright 2014-2020 Typelevel
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package jawnfs2
 
 import cats.effect.{Blocker, ContextShift, ExitCase, IO, Resource}
@@ -7,7 +13,7 @@ import java.nio.ByteBuffer
 import java.nio.file.Paths
 import org.specs2.mutable.Specification
 import org.specs2.specification.core.Fragments
-import org.typelevel.jawn.AsyncParser
+import org.typelevel.jawn.{AsyncParser, Facade}
 import org.typelevel.jawn.ast._
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,7 +39,7 @@ class JawnFs2Spec extends Specification {
   def loadJson(name: String, blocker: Blocker, chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
     readAll[IO](Paths.get(s"testdata/$name.json"), blocker, chunkSize).chunks
 
-  implicit val facade = JParser.facade
+  implicit val facade: Facade[JValue] = JParser.facade
 
   withResource(Blocker[IO]) { blocker =>
     "parseJson" should {

@@ -1,3 +1,9 @@
+/*
+ * Copyright 2014-2020 Typelevel
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import cats.ApplicativeError
 import cats.effect.Sync
 import fs2.{Chunk, Pipe, Pull, Stream}
@@ -21,9 +27,9 @@ package object jawnfs2 {
       // fs2-1.0.4 uses immutable.Seq in 2.13.  This dance should
       // not be necessary after https://github.com/functional-streams-for-scala/fs2/pull/1413
       def wrap(js: collection.Seq[J]) = js match {
-        case b: Buffer[J] =>
+        case b: Buffer[_] =>
           // Empirically, it's this, and it's optimized in fs2
-          Chunk.buffer(b)
+          Chunk.buffer(b.asInstanceOf[Buffer[J]])
         case is: collection.immutable.Seq[J] =>
           // Shouldn't get here, but fs2 optimizes this for a few cases
           Chunk.seq(is)
