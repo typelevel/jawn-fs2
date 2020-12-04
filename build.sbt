@@ -40,3 +40,5 @@ headerLicense := {
     headerLicenseStyle.value
   )
 }
+
+versionIntroduced := Map("3.0.0-M1" -> "1.1.0")
