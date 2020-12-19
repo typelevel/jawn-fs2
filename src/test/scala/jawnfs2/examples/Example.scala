@@ -1,15 +1,22 @@
+/*
+ * Copyright 2014-2020 Typelevel
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package jawnfs2.examples
 
 import cats.effect._
 import fs2.{Stream, io, text}
 import java.nio.file.Paths
 import jawnfs2._
-import org.typelevel.jawn.ast.JawnFacade
+import org.typelevel.jawn.Facade
+import org.typelevel.jawn.ast.{JawnFacade, JValue}
 import scala.concurrent.duration._
 
 object Example extends IOApp {
   // Pick your favorite supported AST (e.g., json4s, argonaut, etc.)
-  implicit val facade = JawnFacade
+  implicit val facade: Facade[JValue] = JawnFacade
 
   def run(args: List[String]) =
     // Uses blocking IO, so provide an appropriate thread pool

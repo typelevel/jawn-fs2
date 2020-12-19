@@ -1,3 +1,9 @@
+/*
+ * Copyright 2014-2020 Typelevel
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 package jawnfs2
 
 import fs2.Chunk

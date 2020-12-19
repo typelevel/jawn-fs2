@@ -17,13 +17,14 @@ publishMavenStyle := true
 
 licenses := Seq("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
 
-homepage := Some(url("https://github.com/http4s/jawn-fs2"))
+homepage := Some(url("https://github.com/typelevel/jawn-fs2"))
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/http4s/jawn-fs2"),
-    "scm:git@github.com:http4s/jawn-fs2.git"
+    url("https://github.com/typelevel/jawn-fs2"),
+    "scm:git@github.com:typelevel/jawn-fs2.git"
   )
 )
+startYear := Some(2014)
 
 developers := List(
   Developer(
