@@ -85,7 +85,7 @@ package object fs2 { self =>
         F: ApplicativeError[F, Throwable],
         A: Absorbable[O],
         facade: Facade[J]): Stream[F, J] =
-      stream.through(self.parseJson(mode))
+      stream.through(fs2.parseJson(mode))
 
     /** Parses the source to a single JSON optional JSON value.
       *
@@ -108,7 +108,7 @@ package object fs2 { self =>
         F: ApplicativeError[F, Throwable],
         A: Absorbable[O],
         facade: Facade[J]): Stream[F, J] =
-      stream.through(self.parseJsonStream)
+      stream.through(fs2.parseJsonStream)
 
     /** Emits elements of an outer JSON array as they are parsed.
       *
@@ -119,6 +119,6 @@ package object fs2 { self =>
         F: ApplicativeError[F, Throwable],
         A: Absorbable[O],
         facade: Facade[J]): Stream[F, J] =
-      stream.through(self.unwrapJsonArray)
+      stream.through(fs2.unwrapJsonArray)
   }
 }
