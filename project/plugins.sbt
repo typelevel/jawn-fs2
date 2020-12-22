@@ -1,5 +1,6 @@
 addSbtPlugin("com.codecommit" % "sbt-github-actions" % "0.9.5")
 addSbtPlugin("com.codecommit" % "sbt-spiewak" % "0.17.0")
 addSbtPlugin("com.codecommit" % "sbt-spiewak-sonatype" % "0.17.0")
+addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.1")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.1.1")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.2")
