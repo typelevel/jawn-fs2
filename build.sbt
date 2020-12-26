@@ -41,4 +41,8 @@ headerLicense := {
   )
 }
 
-versionIntroduced := Map("3.0.0-M1" -> "1.1.0")
+versionIntroduced := Map(
+  "3.0.0-M1" -> "1.0.1",
+  "3.0.0-M2" -> "1.0.1",
+  "3.0.0-M3" -> "1.0.1"
+)
