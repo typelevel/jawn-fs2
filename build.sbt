@@ -10,7 +10,7 @@ ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
 
 val JawnVersion   = "1.0.3"
 val Fs2Version    = "3.0.0-M7"
-val Specs2Version = "4.10.5"
+val Specs2Version = "4.10.6"
 
 libraryDependencies ++= Seq(
   "org.typelevel"  %% "jawn-parser" % JawnVersion,
