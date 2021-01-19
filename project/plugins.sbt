@@ -1,5 +1,1 @@
-addSbtPlugin("com.codecommit" % "sbt-github-actions" % "0.9.4")
-addSbtPlugin("com.codecommit" % "sbt-spiewak" % "0.17.0")
-addSbtPlugin("com.codecommit" % "sbt-spiewak-sonatype" % "0.17.0")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.8.1")
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.1")
+addSbtPlugin("com.codecommit" % "sbt-spiewak-sonatype" % "0.20.1")
