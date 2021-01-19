@@ -3,15 +3,15 @@ import de.heikoseeberger.sbtheader.{LicenseDetection, LicenseStyle}
 ThisBuild / organization := "org.http4s"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.3", "3.0.0-M1")
+ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4", "3.0.0-M2", "3.0.0-M3")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
-ThisBuild / baseVersion := "1.1"
+ThisBuild / baseVersion := "1.0"
 ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
 
-val JawnVersion   = "1.0.1"
-val Fs2Version    = "2.5.0-M1"
+val JawnVersion   = "1.0.3"
+val Fs2Version    = "2.5.0"
 val Specs2Version = "4.10.5"
 
 libraryDependencies ++= Seq(
@@ -41,4 +41,8 @@ headerLicense := {
   )
 }
 
-versionIntroduced := Map("3.0.0-M1" -> "1.1.0")
+versionIntroduced := Map(
+  "3.0.0-M1" -> "1.0.1",
+  "3.0.0-M2" -> "1.0.1",
+  "3.0.0-M3" -> "1.0.1"
+)
