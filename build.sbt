@@ -24,13 +24,6 @@ libraryDependencies ++= Seq(
   "org.specs2"     %% "specs2-core" % Specs2Version % Test withDottyCompat scalaVersion.value,
 )
 
-publishTo := Some(
-  if (isSnapshot.value)
-    Opts.resolver.sonatypeSnapshots
-  else
-    Opts.resolver.sonatypeStaging
-)
-
 versionIntroduced := Map(
   "3.0.0-M1" -> "1.0.1",
   "3.0.0-M2" -> "1.0.1",
