@@ -29,18 +29,6 @@ publishTo := Some(
     Opts.resolver.sonatypeStaging
 )
 
-headerLicenseStyle := LicenseStyle.SpdxSyntax
-headerLicense := {
-  val current = java.time.Year.now().getValue
-  val copyrightYear = startYear.value.fold(current.toString)(start => s"$start-$current")
-  LicenseDetection(
-    licenses.value.toList,
-    organizationName.value,
-    Some(copyrightYear),
-    headerLicenseStyle.value
-  )
-}
-
 versionIntroduced := Map(
   "3.0.0-M1" -> "1.0.1",
   "3.0.0-M2" -> "1.0.1",
