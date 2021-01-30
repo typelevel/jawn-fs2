@@ -8,12 +8,13 @@ ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).
 ThisBuild / baseVersion := "1.0"
 ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
-ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
-ThisBuild / spiewakMainBranches := Seq("main", "series/*")
+ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion   = "1.0.3"
 val Fs2Version    = "2.5.0"
 val Specs2Version = "4.10.5"
+
+enablePlugins(SonatypeCiReleasePlugin)
 
 libraryDependencies ++= Seq(
   "org.typelevel"  %% "jawn-parser" % JawnVersion,
