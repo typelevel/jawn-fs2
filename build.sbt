@@ -9,6 +9,7 @@ ThisBuild / baseVersion := "1.0"
 ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq.empty
+ThisBuild / spiewakMainBranches := Seq("main", "series/*")
 
 val JawnVersion   = "1.0.3"
 val Fs2Version    = "2.5.0"
