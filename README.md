@@ -58,8 +58,8 @@ libraryDependencies += "org.typelevel" %% "jawn-ast" % "1.0.0"
 
 | Stream Library      | You need...                                  | Status
 | ------------------- | -------------------------------------------- | ------
-| fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "0.15.0"`      | stable
-| fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.2"`      | stable
+| fs2-2.x             | `"org.http4s" %% "jawn-fs2" % "1.0.1"`       | stable
+| fs2-1.x             | `"org.http4s" %% "jawn-fs2" % "0.14.2"`      | EOL
 | fs2-0.10.x          | `"org.http4s" %% "jawn-fs2" % "0.12.2"`      | EOL
 | fs2-0.9.x           | `"org.http4s" %% "jawn-fs2" % "0.10.1"`      | EOL
 | scalaz-stream-0.8a  | `"org.http4s" %% "jawn-streamz" % "0.10.1a"` | EOL
