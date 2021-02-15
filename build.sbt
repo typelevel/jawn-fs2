@@ -9,7 +9,7 @@ ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion   = "1.0.3"
-val Fs2Version    = "3.0.0-M7"
+val Fs2Version    = "3.0.0-M8"
 val Specs2Version = "4.10.6"
 
 enablePlugins(SonatypeCiReleasePlugin)
