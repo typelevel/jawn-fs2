@@ -1,15 +1,15 @@
 ThisBuild / organization := "org.typelevel"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4", "3.0.0-M2", "3.0.0-M3")
+ThisBuild / crossScalaVersions := Seq("2.12.12", "2.13.4", "3.0.0-M3", "3.0.0-RC1")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "2.0"
 ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
-val JawnVersion   = "1.0.3"
-val Fs2Version    = "3.0.0-M7"
+val JawnVersion   = "1.1.0"
+val Fs2Version    = "3.0.0-M9"
 val Specs2Version = "4.10.6"
 
 enablePlugins(SonatypeCiReleasePlugin)
