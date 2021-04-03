@@ -8,7 +8,7 @@ ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
-val JawnVersion   = "1.1.0"
+val JawnVersion   = "1.1.1"
 val Fs2Version    = "3.0.1"
 val Specs2Version = "4.10.6"
 
