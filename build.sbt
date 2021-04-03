@@ -8,6 +8,7 @@ ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).
 ThisBuild / baseVersion := "1.1"
 ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
+ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion   = "1.1.1"
