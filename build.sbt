@@ -3,7 +3,7 @@ import de.heikoseeberger.sbtheader.{LicenseDetection, LicenseStyle}
 ThisBuild / organization := "org.http4s"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.5", "3.0.0-RC2", "3.0.0-RC3")
+ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.5", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "1.1"
 ThisBuild / publishGithubUser := "rossabaker"
@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion   = "1.1.2"
-val Fs2Version    = "2.5.5"
+val Fs2Version    = "2.5.6"
 val Specs2Version = "4.11.0"
 
 enablePlugins(SonatypeCiReleasePlugin)
@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
   "co.fs2"         %% "fs2-core"    % Fs2Version,
   "org.typelevel"  %% "jawn-ast"    % JawnVersion   % Test,
   "co.fs2"         %% "fs2-io"      % Fs2Version    % Test,
-  "org.specs2"     %% "specs2-core" % Specs2Version % Test withDottyCompat scalaVersion.value,
+  "org.specs2"     %% "specs2-core" % Specs2Version % Test cross CrossVersion.for3Use2_13,
 )
 
 versionIntroduced := Map(
