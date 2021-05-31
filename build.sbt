@@ -9,18 +9,20 @@ ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
-val JawnVersion   = "1.1.2"
-val Fs2Version    = "3.0.4"
-val Specs2Version = "4.12.0"
+val JawnVersion             = "1.1.2"
+val Fs2Version              = "3.0.4"
+val MunitVersion            = "0.7.26"
+val MunitCatsEffectVersion  = "1.0.3"
 
 enablePlugins(SonatypeCiReleasePlugin)
 
 libraryDependencies ++= Seq(
-  "org.typelevel"  %% "jawn-parser" % JawnVersion,
-  "co.fs2"         %% "fs2-core"    % Fs2Version,
-  "org.typelevel"  %% "jawn-ast"    % JawnVersion   % Test,
-  "co.fs2"         %% "fs2-io"      % Fs2Version    % Test,
-  "org.specs2"     %% "specs2-core" % Specs2Version % Test cross CrossVersion.for3Use2_13,
+  "org.typelevel"  %% "jawn-parser"           % JawnVersion,
+  "co.fs2"         %% "fs2-core"              % Fs2Version,
+  "org.typelevel"  %% "jawn-ast"              % JawnVersion             % Test,
+  "co.fs2"         %% "fs2-io"                % Fs2Version              % Test,
+  "org.scalameta"  %% "munit"                 % MunitVersion            % Test,
+  "org.typelevel"  %% "munit-cats-effect-3"   % MunitCatsEffectVersion  % Test
 )
 
 versionIntroduced := Map(
