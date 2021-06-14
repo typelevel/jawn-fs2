@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(R
 val JawnVersion             = "1.1.2"
 val Fs2Version              = "3.0.4"
 val MunitVersion            = "0.7.26"
-val MunitCatsEffectVersion  = "1.0.3"
+val MunitCatsEffectVersion  = "1.0.5"
 
 enablePlugins(SonatypeCiReleasePlugin)
 
