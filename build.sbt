@@ -10,7 +10,7 @@ ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion             = "1.1.2"
-val Fs2Version              = "3.0.4"
+val Fs2Version              = "3.0.6"
 val MunitVersion            = "0.7.27"
 val MunitCatsEffectVersion  = "1.0.5"
 
