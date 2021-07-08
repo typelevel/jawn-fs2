@@ -14,7 +14,12 @@ val Fs2Version = "3.0.6"
 val MunitVersion = "0.7.27"
 val MunitCatsEffectVersion = "1.0.5"
 
-val root = crossProject(JVMPlatform, JSPlatform)
+lazy val root = project
+  .in(file("."))
+  .enablePlugins(NoPublishPlugin)
+  .aggregate(`jawn-fs2`.jvm, `jawn-fs2`.js)
+
+lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Full)
   .in(file("."))
   .enablePlugins(SonatypeCiReleasePlugin)
@@ -36,3 +41,4 @@ val root = crossProject(JVMPlatform, JSPlatform)
     )
   )
   .jvmSettings(libraryDependencies += "co.fs2" %% "fs2-io" % Fs2Version % Test)
+  .jsSettings(mimaPreviousArtifacts := Set.empty)
