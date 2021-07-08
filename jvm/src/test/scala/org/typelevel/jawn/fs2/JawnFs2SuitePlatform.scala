@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Typelevel
+ * Copyright 2021 Typelevel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,14 @@
 
 package org.typelevel.jawn.fs2
 
-private[this] class SeqWrapper[A](underlying: collection.Seq[A])
-    extends collection.immutable.Seq[A] {
-  def iterator: Iterator[A] = underlying.iterator
-  def apply(i: Int): A = underlying(i)
-  def length: Int = underlying.length
+import cats.effect.IO
+import fs2.Chunk
+import fs2.Stream
+import fs2.io.file.Files
+
+import java.nio.file.Paths
+
+private[fs2] trait JawnFs2SuitePlatform {
+  private[fs2] def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
+    Files[IO].readAll(Paths.get(s"testdata/$name.json"), chunkSize).chunks
 }
