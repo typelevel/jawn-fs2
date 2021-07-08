@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Typelevel
+ * Copyright 2021 Typelevel
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,21 @@
 
 package org.typelevel.jawn.fs2
 
-import java.nio.ByteBuffer
-import java.nio.file.Paths
-
-import cats.syntax.parallel._
+import cats.effect.IO
+import cats.effect.SyncIO
 import cats.effect.kernel.Resource
-import cats.effect.{IO, SyncIO}
-import fs2.io.file.Files
-import fs2.{Chunk, Stream}
+import cats.syntax.parallel._
+import fs2.Chunk
+import fs2.Stream
 import munit.CatsEffectSuite
+import org.typelevel.jawn.AsyncParser
+import org.typelevel.jawn.Facade
 import org.typelevel.jawn.ast._
-import org.typelevel.jawn.{AsyncParser, Facade}
 
+import java.nio.ByteBuffer
 import scala.collection.mutable
 
-class JawnFs2Suite extends CatsEffectSuite {
-  private def loadJson(name: String,
-                       chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
-    Files[IO].readAll(Paths.get(s"testdata/$name.json"), chunkSize).chunks
+class JawnFs2Suite extends CatsEffectSuite with JawnFs2SuitePlatform {
 
   implicit val facade: Facade[JValue] = JParser.facade
 
