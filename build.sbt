@@ -8,6 +8,10 @@ ThisBuild / publishGithubUser := "rossabaker"
 ThisBuild / publishFullName := "Ross A. Baker"
 ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
+ThisBuild / homepage := Some(url("https://github.com/typelevel/jawn-fs2"))
+ThisBuild / scmInfo := Some(
+  ScmInfo(url("https://github.com/typelevel/jawn-fs2"), "git@github.com:typelevel/jawn-fs2.git")
+)
 
 val JawnVersion = "1.2.0"
 val Fs2Version = "3.0.6"
