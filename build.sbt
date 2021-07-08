@@ -30,14 +30,6 @@ lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform)
       "org.typelevel" %%% "jawn-ast" % JawnVersion % Test,
       "org.scalameta" %%% "munit" % MunitVersion % Test,
       "org.typelevel" %%% "munit-cats-effect-3" % MunitCatsEffectVersion % Test
-    ),
-    versionIntroduced := Map(
-      "3.0.0-M1" -> "1.0.1",
-      "3.0.0-M2" -> "1.0.1",
-      "3.0.0-M3" -> "1.0.1",
-      "3.0.0-RC1" -> "1.1.0",
-      "3.0.0-RC2" -> "1.1.1",
-      "3.0.0-RC3" -> "1.1.2"
     )
   )
   .jvmSettings(libraryDependencies += "co.fs2" %% "fs2-io" % Fs2Version % Test)
