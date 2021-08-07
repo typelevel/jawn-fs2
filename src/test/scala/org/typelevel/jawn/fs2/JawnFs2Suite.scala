@@ -22,6 +22,9 @@ import cats.effect.kernel.Resource
 import cats.syntax.parallel._
 import fs2.Chunk
 import fs2.Stream
+import fs2.io.file.Files
+import fs2.io.file.Flags
+import fs2.io.file.Path
 import munit.CatsEffectSuite
 import org.typelevel.jawn.AsyncParser
 import org.typelevel.jawn.Facade
@@ -30,7 +33,9 @@ import org.typelevel.jawn.ast._
 import java.nio.ByteBuffer
 import scala.collection.mutable
 
-class JawnFs2Suite extends CatsEffectSuite with JawnFs2SuitePlatform {
+class JawnFs2Suite extends CatsEffectSuite {
+  private def loadJson(name: String, chunkSize: Int = 1024): Stream[IO, Chunk[Byte]] =
+    Files[IO].readAll(Path(s"testdata/$name.json"), chunkSize, Flags.Read).chunks
 
   implicit val facade: Facade[JValue] = JParser.facade
 
