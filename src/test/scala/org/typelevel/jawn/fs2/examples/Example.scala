@@ -17,11 +17,15 @@
 package org.typelevel.jawn.fs2.examples
 
 import cats.effect._
+import fs2.Stream
+import fs2.io
 import fs2.io.file.Files
-import fs2.{Stream, io, text}
-import java.nio.file.Paths
+import fs2.io.file.Flags
+import fs2.io.file.Path
+import fs2.text
 import org.typelevel.jawn.ast.JawnFacade
 import org.typelevel.jawn.fs2._
+
 import scala.concurrent.duration._
 
 object Example extends IOApp {
@@ -30,13 +34,13 @@ object Example extends IOApp {
 
   def run(args: List[String]): IO[ExitCode] = {
     // From JSON on disk
-    val jsonStream = Files[IO].readAll(Paths.get("testdata/random.json"), 64)
+    val jsonStream = Files[IO].readAll(Path("testdata/random.json"), 64, Flags.Read)
     // Simulate lag between chunks
     val lag = Stream.awakeEvery[IO](100.millis)
     val laggedStream = jsonStream.chunks.zipWith(lag)((chunk, _) => chunk)
     // Print each element of the JSON array as we read it
     val json =
-      laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
+      laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8.encode)
     // run converts the stream into an IO, unsafeRunSync executes the IO for its effects
     json.through(io.stdout).compile.drain.as(ExitCode.Success)
   }
