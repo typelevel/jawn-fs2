@@ -15,7 +15,7 @@ ThisBuild / scmInfo := Some(
 
 val JawnVersion = "1.2.0"
 val Fs2Version = "3.1.0"
-val MunitVersion = "0.7.27"
+val MunitVersion = "0.7.28"
 val MunitCatsEffectVersion = "1.0.5"
 
 lazy val root = project
