@@ -22,7 +22,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     Compile / unmanagedSourceDirectories := Seq.empty,
-    Test / unmanagedSourceDirectories := Seq.empty,
+    Test / unmanagedSourceDirectories := Seq.empty
   )
   .enablePlugins(NoPublishPlugin)
   .aggregate(`jawn-fs2`.jvm, `jawn-fs2`.js)
