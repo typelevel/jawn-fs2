@@ -26,9 +26,12 @@ package object fs2 { self =>
 
   /** Parses to any Jawn-supported AST using the specified Async mode.
     *
-    * @param facade the Jawn facade to materialize `J`
-    * @tparam J the JSON AST to return
-    * @param mode the async mode of the Jawn parser
+    * @param facade
+    *   the Jawn facade to materialize `J`
+    * @tparam J
+    *   the JSON AST to return
+    * @param mode
+    *   the async mode of the Jawn parser
     */
   def parseJson[F[_], A, J](mode: AsyncParser.Mode)(implicit
       F: ApplicativeError[F, Throwable],
@@ -51,8 +54,10 @@ package object fs2 { self =>
 
   /** Emits individual JSON elements as they are parsed.
     *
-    * @param facade the Jawn facade to materialize `J`
-    * @tparam J the JSON AST to return
+    * @param facade
+    *   the Jawn facade to materialize `J`
+    * @tparam J
+    *   the JSON AST to return
     */
   def parseJsonStream[F[_], A, J](implicit
       F: ApplicativeError[F, Throwable],
@@ -62,8 +67,10 @@ package object fs2 { self =>
 
   /** Emits elements of an outer JSON array as they are parsed.
     *
-    * @param facade the Jawn facade to materialize `J`
-    * @tparam J the JSON AST to return
+    * @param facade
+    *   the Jawn facade to materialize `J`
+    * @tparam J
+    *   the JSON AST to return
     */
   def unwrapJsonArray[F[_], A, J](implicit
       F: ApplicativeError[F, Throwable],
@@ -77,9 +84,12 @@ package object fs2 { self =>
 
     /** Parses a source to any Jawn-supported AST using the specified Async mode.
       *
-      * @param facade the Jawn facade to materialize `J`
-      * @tparam J the JSON AST to return
-      * @param mode the async mode of the Jawn parser
+      * @param facade
+      *   the Jawn facade to materialize `J`
+      * @tparam J
+      *   the JSON AST to return
+      * @param mode
+      *   the async mode of the Jawn parser
       */
     def parseJson[J](mode: AsyncParser.Mode)(implicit
         F: ApplicativeError[F, Throwable],
@@ -89,9 +99,12 @@ package object fs2 { self =>
 
     /** Parses the source to a single JSON optional JSON value.
       *
-      * @param facade the Jawn facade to materialize `J`
-      * @tparam J the JSON AST to return
-      * @return some parsed JSON value, or None if the source is empty
+      * @param facade
+      *   the Jawn facade to materialize `J`
+      * @tparam J
+      *   the JSON AST to return
+      * @return
+      *   some parsed JSON value, or None if the source is empty
       */
     def runJsonOption[J](implicit
         F: Concurrent[F],
@@ -101,8 +114,10 @@ package object fs2 { self =>
 
     /** Emits individual JSON elements as they are parsed.
       *
-      * @param facade the Jawn facade to materialize `J`
-      * @tparam J the JSON AST to return
+      * @param facade
+      *   the Jawn facade to materialize `J`
+      * @tparam J
+      *   the JSON AST to return
       */
     def parseJsonStream[J](implicit
         F: ApplicativeError[F, Throwable],
@@ -112,8 +127,10 @@ package object fs2 { self =>
 
     /** Emits elements of an outer JSON array as they are parsed.
       *
-      * @param facade the Jawn facade to materialize `J`
-      * @tparam J the JSON AST to return
+      * @param facade
+      *   the Jawn facade to materialize `J`
+      * @tparam J
+      *   the JSON AST to return
       */
     def unwrapJsonArray[J](implicit
         F: ApplicativeError[F, Throwable],

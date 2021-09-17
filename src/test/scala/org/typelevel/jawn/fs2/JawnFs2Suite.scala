@@ -53,9 +53,7 @@ class JawnFs2Suite extends CatsEffectSuite {
         .map(_.fold(_ => None, _.headOption))
     )
 
-  private def parseSuite[A: Absorbable](name: String,
-                                        data: A,
-                                        expectedValue: JValue): Unit =
+  private def parseSuite[A: Absorbable](name: String, data: A, expectedValue: JValue): Unit =
     parse(data).test(name) {
       case Some(value) =>
         assertEquals(value, expectedValue)
@@ -95,8 +93,8 @@ class JawnFs2Suite extends CatsEffectSuite {
     liftResource((runIt, runIt).parMapN(_ -> _))
   }
 
-  parseJsonReusableTestCase.test("parseJson should be reusable") {
-    case (firstRun, secondRun) => assertEquals(firstRun, secondRun)
+  parseJsonReusableTestCase.test("parseJson should be reusable") { case (firstRun, secondRun) =>
+    assertEquals(firstRun, secondRun)
   }
 
   liftResource(loadJson("single").runJsonOption).test(
