@@ -1,7 +1,7 @@
 ThisBuild / organization := "org.typelevel"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.6", "3.0.2")
+ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.1.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "2.0"
 ThisBuild / publishGithubUser := "rossabaker"
@@ -14,15 +14,15 @@ ThisBuild / scmInfo := Some(
 )
 
 val JawnVersion = "1.2.0"
-val Fs2Version = "3.1.2"
+val Fs2Version = "3.1.6"
 val MunitVersion = "0.7.29"
-val MunitCatsEffectVersion = "1.0.5"
+val MunitCatsEffectVersion = "1.0.6"
 
 lazy val root = project
   .in(file("."))
   .settings(
     Compile / unmanagedSourceDirectories := Seq.empty,
-    Test / unmanagedSourceDirectories := Seq.empty,
+    Test / unmanagedSourceDirectories := Seq.empty
   )
   .enablePlugins(NoPublishPlugin)
   .aggregate(`jawn-fs2`.jvm, `jawn-fs2`.js)
