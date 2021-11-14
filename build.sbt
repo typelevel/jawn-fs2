@@ -3,7 +3,7 @@ import de.heikoseeberger.sbtheader.{LicenseDetection, LicenseStyle}
 ThisBuild / organization := "org.http4s"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.5", "3.0.0")
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.5", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "1.1"
 ThisBuild / publishGithubUser := "rossabaker"
