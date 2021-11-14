@@ -13,7 +13,7 @@ ThisBuild / scmInfo := Some(
   ScmInfo(url("https://github.com/typelevel/jawn-fs2"), "git@github.com:typelevel/jawn-fs2.git")
 )
 
-val JawnVersion = "1.2.0"
+val JawnVersion = "1.3.0"
 val Fs2Version = "3.2.2"
 val MunitVersion = "0.7.29"
 val MunitCatsEffectVersion = "1.0.6"
