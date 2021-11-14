@@ -3,7 +3,7 @@ import de.heikoseeberger.sbtheader.{LicenseDetection, LicenseStyle}
 ThisBuild / organization := "org.http4s"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.5", "3.0.0")
+ThisBuild / crossScalaVersions := Seq("2.12.13", "2.13.5", "3.0.2")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "1.1"
 ThisBuild / publishGithubUser := "rossabaker"
@@ -12,7 +12,7 @@ ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 
 val JawnVersion   = "1.1.2"
-val Fs2Version    = "2.5.6"
+val Fs2Version    = "2.5.10"
 val Specs2Version = "4.11.0"
 
 enablePlugins(SonatypeCiReleasePlugin)
