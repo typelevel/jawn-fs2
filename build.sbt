@@ -16,7 +16,7 @@ ThisBuild / scmInfo := Some(
 val JawnVersion = "1.3.0"
 val Fs2Version = "3.2.2"
 val MunitVersion = "0.7.29"
-val MunitCatsEffectVersion = "1.0.6"
+val MunitCatsEffectVersion = "1.0.7"
 
 lazy val root = project
   .in(file("."))
