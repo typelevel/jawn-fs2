@@ -14,7 +14,7 @@ ThisBuild / scmInfo := Some(
 )
 
 val JawnVersion = "1.3.0"
-val Fs2Version = "3.2.3"
+val Fs2Version = "3.2.4"
 val MunitVersion = "0.7.29"
 val MunitCatsEffectVersion = "1.0.7"
 
