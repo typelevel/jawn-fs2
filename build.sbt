@@ -1,7 +1,7 @@
 ThisBuild / organization := "org.typelevel"
 ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.6", "3.1.0")
+ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7", "3.1.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
 ThisBuild / baseVersion := "2.0"
 ThisBuild / publishGithubUser := "rossabaker"
@@ -13,7 +13,7 @@ ThisBuild / scmInfo := Some(
   ScmInfo(url("https://github.com/typelevel/jawn-fs2"), "git@github.com:typelevel/jawn-fs2.git")
 )
 
-val JawnVersion = "1.3.0"
+val JawnVersion = "1.3.2"
 val Fs2Version = "3.2.4"
 val MunitVersion = "0.7.29"
 val MunitCatsEffectVersion = "1.0.7"
