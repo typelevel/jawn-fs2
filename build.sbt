@@ -1,6 +1,6 @@
 ThisBuild / organization := "org.http4s"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "3.0.2", "2.13.7")
+ThisBuild / crossScalaVersions := Seq("2.12.15", "3.0.2", "2.13.8")
 ThisBuild / tlBaseVersion := "1.2"
 ThisBuild / tlCiReleaseBranches := Seq("series/1.x")
 startYear := Some(2014)
