@@ -21,7 +21,7 @@ import fs2.{Stream, io, text}
 import java.nio.file.Paths
 import jawnfs2._
 import org.typelevel.jawn.Facade
-import org.typelevel.jawn.ast.{JawnFacade, JValue}
+import org.typelevel.jawn.ast.{JValue, JawnFacade}
 import scala.concurrent.duration._
 
 object Example extends IOApp {
@@ -37,7 +37,8 @@ object Example extends IOApp {
       val lag = Stream.awakeEvery[IO](100.millis)
       val laggedStream = jsonStream.chunks.zipWith(lag)((chunk, _) => chunk)
       // Print each element of the JSON array as we read it
-      val json = laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
+      val json =
+        laggedStream.unwrapJsonArray.map(_.toString).intersperse("\n").through(text.utf8Encode)
       // run converts the stream into an IO, unsafeRunSync executes the IO for its effects
       json.through(io.stdout(blocker)).compile.drain.as(ExitCode.Success)
     }
