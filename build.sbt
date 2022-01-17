@@ -1,21 +1,28 @@
-import de.heikoseeberger.sbtheader.{LicenseDetection, LicenseStyle}
-
 ThisBuild / organization := "org.http4s"
-ThisBuild / organizationName := "Typelevel"
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7", "3.0.2")
-ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
-ThisBuild / baseVersion := "1.1"
-ThisBuild / publishGithubUser := "rossabaker"
-ThisBuild / publishFullName := "Ross A. Baker"
-ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
-ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
+ThisBuild / crossScalaVersions := Seq("2.12.15", "3.0.2", "2.13.7")
+ThisBuild / tlBaseVersion := "1.1"
+ThisBuild / tlCiReleaseBranches := Seq("series/1.x")
+startYear := Some(2021)
+
+ThisBuild / developers := List(
+  Developer(
+    id = "rossabaker",
+    name = "Ross A. Baker",
+    email = "ross@rossabaker.com",
+    url = url("https://github.com/rossabaker")
+  ),
+  Developer(
+    id = "ChristopherDavenport",
+    name = "Christopher Davenport",
+    email = "chris@christopherdavenport.tech",
+    url = url("https://github.com/ChristopherDavenport")
+  )
+)
 
 val JawnVersion   = "1.3.2"
 val Fs2Version    = "2.5.10"
 val Specs2Version = "4.13.1"
-
-enablePlugins(SonatypeCiReleasePlugin)
 
 libraryDependencies ++= Seq(
   "org.typelevel"  %% "jawn-parser" % JawnVersion,
@@ -25,11 +32,4 @@ libraryDependencies ++= Seq(
   "org.specs2"     %% "specs2-core" % Specs2Version % Test cross CrossVersion.for3Use2_13,
 )
 
-versionIntroduced := Map(
-  "3.0.0-M1" -> "1.0.1",
-  "3.0.0-M2" -> "1.0.1",
-  "3.0.0-M3" -> "1.0.1",
-  "3.0.0-RC1" -> "1.1.0",
-  "3.0.0-RC2" -> "1.1.1",
-  "3.0.0-RC3" -> "1.1.2"
-)
+tlVersionIntroduced := Map("3" -> "1.1.3")
