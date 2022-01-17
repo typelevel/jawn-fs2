@@ -1,16 +1,21 @@
-ThisBuild / organization := "org.typelevel"
-ThisBuild / organizationName := "Typelevel"
+ThisBuild / crossScalaVersions := Seq("2.12.15", "3.1.0", "2.13.7")
+ThisBuild / tlBaseVersion := "2.2"
+ThisBuild / tlVersionIntroduced := Map("3" -> "2.0.2")
+ThisBuild / startYear := Some(2021)
 
-ThisBuild / crossScalaVersions := Seq("2.12.15", "2.13.7", "3.1.0")
-ThisBuild / scalaVersion := crossScalaVersions.value.filter(_.startsWith("2.")).last
-ThisBuild / baseVersion := "2.0"
-ThisBuild / publishGithubUser := "rossabaker"
-ThisBuild / publishFullName := "Ross A. Baker"
-ThisBuild / githubWorkflowTargetBranches := List("*", "series/*")
-ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
-ThisBuild / homepage := Some(url("https://github.com/typelevel/jawn-fs2"))
-ThisBuild / scmInfo := Some(
-  ScmInfo(url("https://github.com/typelevel/jawn-fs2"), "git@github.com:typelevel/jawn-fs2.git")
+ThisBuild / developers := List(
+  Developer(
+    id = "rossabaker",
+    name = "Ross A. Baker",
+    email = "ross@rossabaker.com",
+    url = url("https://github.com/rossabaker")
+  ),
+  Developer(
+    id = "ChristopherDavenport",
+    name = "Christopher Davenport",
+    email = "chris@christopherdavenport.tech",
+    url = url("https://github.com/ChristopherDavenport")
+  )
 )
 
 val JawnVersion = "1.3.2"
@@ -18,19 +23,11 @@ val Fs2Version = "3.2.4"
 val MunitVersion = "0.7.29"
 val MunitCatsEffectVersion = "1.0.7"
 
-lazy val root = project
-  .in(file("."))
-  .settings(
-    Compile / unmanagedSourceDirectories := Seq.empty,
-    Test / unmanagedSourceDirectories := Seq.empty
-  )
-  .enablePlugins(NoPublishPlugin)
-  .aggregate(`jawn-fs2`.jvm, `jawn-fs2`.js)
+lazy val root = tlCrossRootProject.aggregate(`jawn-fs2`)
 
 lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
-  .in(file("."))
-  .enablePlugins(SonatypeCiReleasePlugin)
+  .in(file("core"))
   .settings(
     libraryDependencies ++= Seq(
       "org.typelevel" %%% "jawn-parser" % JawnVersion,
@@ -41,4 +38,7 @@ lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform)
       "org.typelevel" %%% "munit-cats-effect-3" % MunitCatsEffectVersion % Test
     )
   )
-  .jsSettings(scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) })
+  .jsSettings(
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.1.0").toMap,
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
+  )
