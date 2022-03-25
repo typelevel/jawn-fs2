@@ -6,7 +6,7 @@ to JSON values with [jawn](https://github.com/non/jawn).
 
 ## Example
 
-`sbt test:run` to see it in action:
+`sbt jawn-fs2JVM/Test/run` to see it in action:
 
 ```Scala
 package com.example
