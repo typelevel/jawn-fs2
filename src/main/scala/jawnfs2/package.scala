@@ -56,7 +56,7 @@ package object jawnfs2 {
         attempt.fold(Pull.raiseError[F], js => Pull.output(wrap(js)))
 
       s.pull.uncons1.flatMap {
-        case Some((a, stream)) =>
+        case Some(a, stream) =>
           handle(A.absorb(parser, a)) >> go(parser)(stream)
         case None =>
           handle(parser.finish()) >> Pull.done
