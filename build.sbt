@@ -21,7 +21,7 @@ ThisBuild / developers := List(
 )
 
 val JawnVersion = "1.3.2"
-val Fs2Version = "2.5.10"
+val Fs2Version = "2.5.11"
 val Specs2Version = "4.15.0"
 
 libraryDependencies ++= Seq(
