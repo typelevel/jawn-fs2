@@ -40,7 +40,7 @@ class JawnFs2Suite extends CatsEffectSuite {
   implicit val facade: Facade[JValue] = JParser.facade
 
   private def liftResource[A](io: IO[A]): SyncIO[FunFixture[A]] =
-    ResourceFixture(Resource.eval(io))
+    ResourceFunFixture(Resource.eval(io))
 
   private def parse[A: Absorbable](a: A*): SyncIO[FunFixture[Option[JValue]]] =
     liftResource(
