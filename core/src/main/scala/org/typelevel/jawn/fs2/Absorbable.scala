@@ -50,6 +50,6 @@ object Absorbable {
     new Absorbable[C] {
       override def absorb[J](parser: AsyncParser[J], chunk: C)(implicit
           rawFacade: Facade[J]): Either[ParseException, collection.Seq[J]] =
-        parser.absorb(chunk.toArray)
+        parser.absorb(chunk.toByteBuffer)
     }
 }
