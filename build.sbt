@@ -1,4 +1,4 @@
-ThisBuild / crossScalaVersions := Seq("2.12.17", "3.2.2", "2.13.10")
+ThisBuild / crossScalaVersions := Seq("2.12.18", "3.3.0", "2.13.11")
 ThisBuild / tlBaseVersion := "2.4"
 ThisBuild / tlVersionIntroduced := Map("3" -> "2.0.2")
 ThisBuild / startYear := Some(2014)
@@ -18,8 +18,8 @@ ThisBuild / developers := List(
   )
 )
 
-val JawnVersion = "1.4.0"
-val Fs2Version = "3.7.0"
+val JawnVersion = "1.5.1"
+val Fs2Version = "3.8.0"
 val MunitVersion = "1.0.0-M7"
 val MunitCatsEffectVersion = "2.0.0-M3"
 
