@@ -39,7 +39,7 @@ package object fs2 { self =>
       facade: Facade[J]): Pipe[F, A, J] = {
     def go(parser: AsyncParser[J])(s: Stream[F, A]): Pull[F, J, Unit] = {
       def handle(attempt: Either[ParseException, collection.Seq[J]]) =
-        attempt.fold(Pull.raiseError[F], js => Pull.output(Chunk.seq(js)))
+        attempt.fold(Pull.raiseError[F], js => Pull.output(Chunk.from(js)))
 
       s.pull.uncons1.flatMap {
         case Some((a, stream)) =>
