@@ -1,5 +1,5 @@
 ThisBuild / crossScalaVersions := Seq("2.12.19", "3.3.3", "2.13.14")
-ThisBuild / tlBaseVersion := "2.4"
+ThisBuild / tlBaseVersion := "2.5"
 ThisBuild / tlVersionIntroduced := Map("3" -> "2.0.2")
 ThisBuild / startYear := Some(2014)
 
@@ -18,7 +18,7 @@ ThisBuild / developers := List(
   )
 )
 
-val JawnVersion = "1.5.1"
+val JawnVersion = "1.6.0"
 val Fs2Version = "3.10.2"
 val MunitVersion = "1.0.0"
 val MunitCatsEffectVersion = "2.0.0"
@@ -43,5 +43,5 @@ lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
   )
   .nativeSettings(
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.2.1").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.5.0").toMap
   )
