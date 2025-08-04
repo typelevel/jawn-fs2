@@ -18,10 +18,10 @@ ThisBuild / developers := List(
   )
 )
 
-val JawnVersion = "1.5.1"
-val Fs2Version = "3.12.0"
-val MunitVersion = "1.0.0"
-val MunitCatsEffectVersion = "2.1.0"
+val JawnVersion = "1.6.0"
+val Fs2Version = "3.13.0-M6"
+val MunitVersion = "1.1.0"
+val MunitCatsEffectVersion = "2.2.0-RC1"
 
 lazy val root = tlCrossRootProject.aggregate(`jawn-fs2`)
 
@@ -43,5 +43,5 @@ lazy val `jawn-fs2` = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
   )
   .nativeSettings(
-    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.2.1").toMap
+    tlVersionIntroduced := List("2.12", "2.13", "3").map(_ -> "2.5.0").toMap
   )
