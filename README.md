@@ -1,4 +1,4 @@
-# jawn-fs2 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.typelevel/jawn-fs2_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.typelevel/jawn-fs2_2.13)
+# jawn-fs2 [![Maven Central](https://img.shields.io/maven-central/v/org.typelevel/jawn-fs2_2.13)](https://central.sonatype.com/artifact/org.typelevel/jawn-fs2_2.13)
 [![Continuous Integration](https://github.com/typelevel/jawn-fs2/actions/workflows/ci.yml/badge.svg)](https://github.com/typelevel/jawn-fs2/actions/workflows/ci.yml)
 
 Asynchronously parse [fs2](https://github.com/functional-streams-for-scala/fs2) streams
