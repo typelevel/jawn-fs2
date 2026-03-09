@@ -21,7 +21,7 @@ ThisBuild / developers := List(
 val JawnVersion = "1.6.0"
 val Fs2Version = "3.13.0-M6"
 val MunitVersion = "1.2.4"
-val MunitCatsEffectVersion = "2.2.0-RC1"
+val MunitCatsEffectVersion = "2.2.0"
 
 lazy val root = tlCrossRootProject.aggregate(`jawn-fs2`)
 
