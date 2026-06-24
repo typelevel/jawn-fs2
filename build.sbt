@@ -18,7 +18,7 @@ ThisBuild / developers := List(
   )
 )
 
-val JawnVersion = "1.6.0"
+val JawnVersion = "1.7.0"
 val Fs2Version = "3.13.0"
 val MunitVersion = "1.3.3"
 val MunitCatsEffectVersion = "2.2.0"
